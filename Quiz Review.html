@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Networking Command Line Quiz</title>
+    <style>
+        @import url('https://fonts.fonts.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #007BFF;
+            --secondary-color: #f1f5f9;
+            --correct-color: #10B981; /* Emerald Green */
+            --incorrect-color: #EF4444; /* Red */
+            --warning-color: #FBBF24; /* Amber */
+            --text-color: #1e293b;
+            --light-correct: #D1FAE5;
+            --light-incorrect: #FEE2E2;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        /* Mode Selection & Timer */
+        #mode-selection {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #eef2ff; /* Light Primary Background */
+        }
+        
+        /* Quiz Header with Timer and Exit Button */
+        #quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            background-color: #eef2ff;
+        }
+
+        .mode-button-group button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            border: 2px solid var(--primary-color);
+            border-radius: 6px;
+            background-color: transparent;
+            color: var(--primary-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mode-button-group button.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        #exit-button {
+            padding: 8px 15px;
+            border: 1px solid #94a3b8;
+            background-color: #f1f5f9;
+            color: var(--text-color);
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        #exit-button:hover {
+            background-color: #e2e8f0;
+        }
+
+        #timer-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            margin-top: 0;
+        }
+        
+        .timer-warning {
+            color: var(--incorrect-color) !important;
+        }
+
+        /* Question Card Styling */
+        .question-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .question-text {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        /* Option Styling */
+        .option-label {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: #f8fafc;
+            border: 1px solid #f1f5f9;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .option-label:hover:not(.disabled) {
+            background-color: #e2e8f0;
+        }
+        
+        /* Disable hover effect on disabled labels */
+        .option-label.disabled {
+            cursor: default;
+        }
+
+        .option-label input[type="radio"] {
+            margin-right: 12px;
+            accent-color: var(--primary-color);
+        }
+
+        /* Live Feedback Styling */
+        .feedback {
+            font-weight: 700;
+            margin-top: 10px;
+            padding-top: 5px;
+            border-top: 1px dashed #e2e8f0;
+            display: none; /* Hidden by default */
+        }
+
+        /* Card Colors */
+        .correct-answer {
+            border-color: var(--correct-color);
+        }
+        
+        .wrong-answer {
+            border-color: var(--incorrect-color);
+        }
+
+        /* Text Feedback Colors */
+        .correct-text { color: var(--correct-color); display: block; }
+        .incorrect-text { color: var(--incorrect-color); display: block; }
+
+        /* Highlight colors for options */
+        .correct-option {
+            background-color: var(--light-correct) !important;
+        }
+
+        .incorrect-option {
+            background-color: var(--light-incorrect) !important;
+        }
+
+
+        /* Submit Button and Results */
+        .submit-btn, .start-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover, .start-btn:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        
+        .submit-btn:disabled, .start-btn:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+
+        #results {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #f0f9ff;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: none; /* Hidden until submission */
+        }
+
+        #score-display {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        #quiz-container {
+            display: none; /* Hidden until quiz starts */
+        }
+        
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Networking Diagnostics and Components Quiz</h1>
+        
+        <div id="quiz-intro">
+            <div id="mode-selection">
+                <h2>Select Quiz Mode</h2>
+                <div class="mode-button-group">
+                    <button id="practice-btn" class="active" onclick="setMode('practice')">Practice Mode</button>
+                    <button id="exam-btn" onclick="setMode('exam')">Exam Mode (40 mins)</button>
+                </div>
+            </div>
+            <p id="mode-description" style="text-align: center; margin-bottom: 20px; color: var(--primary-color);">
+                In **Practice Mode**, you get instant feedback and the correct answer if you are wrong.
+            </p>
+            <button class="start-btn" onclick="startQuiz()">Start Quiz</button>
+        </div>
+
+        <!-- Quiz Header with Exit Button -->
+        <div id="quiz-header" style="display: none;">
+            <p style="margin: 0; font-size: 1rem; font-weight: 600;">Mode: <span id="current-mode-display">Practice</span></p>
+            <div id="timer-display">40:00</div>
+            <button id="exit-button" onclick="exitQuiz()">Exit Quiz</button>
+        </div>
+
+        <div id="quiz-container">
+            <!-- Questions will be dynamically inserted here -->
+        </div>
+        <button id="submit-button" class="submit-btn" onclick="submitQuiz()" style="display: none;">Submit Quiz and Get Score</button>
+        
+        <div id="results">
+            <p>Quiz Finished!</p>
+            <p>Mode: <span id="final-mode-display"></span></p>
+            <p>Your Final Score:</p>
+            <p><span id="score-display">0/0</span></p>
+        </div>
+    </div>
+
+    <script>
+        // Consolidated Quiz Data from all submitted files (76 unique questions)
+        const quizData = [
+            // --- Network Tools/Hardware (31 Questions) ---
+            { q: "What diagnostic utility tool determines the route to a destination by sending Internet Control Message Protocol (ICMP) echo packets to the destination?", a: "Tracert", options: ["Tracert", "Ping", "Nslookup", "Ipconfig", "ipconfig/all"] },
+            { q: "It is a basic, yet popular, Windows network command-line utility used to display the basic TCP/IP network configuration of a computer.", a: "Ipconfig", options: ["Nslookup", "Ipconfig", "Tracert", "ping"] },
+            { q: "The ping command operates by sending ICMP echo request packets. What does ping stand for?", a: "Packet internet groper", options: ["Protocol internet groper", "Packet internet groper", "Protocol industry group", "Packet industry group"] },
+            { q: "It is a network administration command-line tool used to retrieve all TCP/IP network information and configuration of a computer including its MAC address, adapter description, and DHCP details.", a: "ipconfig/all", options: ["ipconfig/all", "Ping", "Tracert", "Nslookup", "ipconfig"] },
+            { q: "It is a network administration command-line tool used for querying the Domain Name System (DNS) to obtain domain name or IP address mapping information.", a: "Nslookup", options: ["Nslookup", "Tracert", "ipconfig/all", "Ping"] },
+            { q: "What basic network command is used to test a device’s network connectivity?", a: "ping", options: ["Ipconfig", "tracert", "Nslookup", "ping"] },
+            { q: "What is an advantage that coaxial cable has over STP or UTP?", a: "It can run for a longer distance unboosted", options: ["It can run for a longer distance unboosted", "It is inexpensive.", "None of the choices.", "It is capable of achieving 10 Mbps to 100Mpbs"] },
+            { q: "What type of connector is used for DSL connection?", a: "RJ-11", options: ["RJ-45", "F", "AUI", "RJ-11"] },
+            { q: "What type of connector is used to connect a router and a cable system?", a: "F", options: ["RJ-11", "AUI", "F", "RJ-45"] },
+            { q: "Which connector does a UTP use?", a: "RJ-45", options: ["BNC", "RJ-69", "RJ-45", "STP"] },
+            { q: "A type of twisted pair cable used to connect a computer to a network hub/router.", a: "Straight-through", options: ["Coaxial", "Straight-through", "Crossover", "Rollover"] },
+            { q: "A type of Ethernet cable used to connect computing devices of the same type (e.g., two computers) directly.", a: "Crossover", options: ["A straight-through", "Coaxial", "Rollover", "Crossover"] },
+            { q: "What type of cable is used to connect a terminal and a console port?", a: "Rollover", options: ["Coaxial", "Rollover", "Crossover", "Straight-through"] },
+            { q: "How many pairs of wires make up a UTP cable?", a: "4", options: ["6", "4", "2", "8"] },
+            { q: "Which of the following devices is a component of a PC that connects it to the networking device?", a: "NIC card", options: ["NIC card", "Repeater", "Hub", "Bridge", "Gateway"] },
+            { q: "It is an intelligent network device that has decision-making and switching capabilities whose basic function is to expedite traffic flow on networks.", a: "Switch", options: ["Hub", "Repeater", "Router", "Switch", "Bridge"] },
+            { q: "Which among the following network devices is capable of storing MAC address tables?", a: "Switch", options: ["Bridge", "Router", "Hub", "Switch", "Gateway"] },
+            { q: "The MAC address is made up of ______ bytes or octets identified by its hexadecimal code.", a: "6", options: ["8", "6", "4", "16"] },
+            { q: "Which among the following network devices is used to connect two or more different LANs?", a: "Router", options: ["Switch", "Hub", "Repeater", "Router", "Bridge"] },
+            { q: "The MAC address is made up of how many bits?", a: "48", options: ["128", "48", "64", "32"] },
+            { q: "The IPv4 address is made up of how many bits?", a: "32", options: ["48", "32", "128", "64"] },
+            { q: "The IPv6 address is made up of how many bits?", a: "128", options: ["32", "128", "64", "48"] },
+            { q: "Which device modulates digital signal into analog signals for transmission over traditional telephone lines?", a: "Modem", options: ["Switch", "Router", "Bridge", "Modem", "Hub"] },
+            { q: "What does a router route?", a: "Layer 3 packets", options: ["Layer 3 packets", "Layer 4 segments", "Layer 1 bits", "Layer 2 frames"] },
+            { q: "What do the first six hexadecimal numbers in a MAC address represent?", a: "Organizationally unique identifier", options: ["None of the choices", "Interface unique identifier", "Organizationally unique identifier", "Interface serial number"] },
+            { q: "Which device takes data from one network device and broadcasts the same to all the devices in the network?", a: "Hub", options: ["Hub", "Modem", "Router", "Switch", "Bridge"] },
+            { q: "Which network device connects two LAN segments of the same protocol?", a: "Bridge", options: ["Hub", "Switch", "Bridge", "Router", "Gateway"] },
+            { q: "Which network device connects any two or more different networks that have two or more different protocols?", a: "Gateway", options: ["Gateway", "Hub", "Router", "Switch", "Bridge"] },
+            { q: "Which among the following is(are) an OSI Layer 2 network device(s)?", a: "Bridge and Switch", options: ["Switch and Router", "Hub and Repeater", "Router and Gateway", "Bridge and Switch"] },
+            { q: "Which among the following is an OSI Layer 3 network device?", a: "Router", options: ["Repeater", "Switch", "Hub", "Router", "Bridge"] },
+            { q: "Which among the following is(are) an OSI Layer 1 network device(s)?", a: "Hub and Repeater", options: ["Hub and Repeater", "Switch and Router", "Router and Gateway", "Bridge and Switch"] },
+
+            // --- Data Comms & OSI (45 Questions) ---
+            { q: "Which standards body created the cables and connector specifications used to support Ethernet implementation?", a: "ΕΙΑ/ΤΙΑ", options: ["ΕΙΑ/ΤΙΑ", "ISO", "ANSI", "IETF"] },
+            { q: "What do TIA/EIA stand for?", a: "Telecommunications Industry Association/ Electronic Industries Alliance", options: ["Telephone International Association/Electronic Industries Alliance", "Telecommunications Industry Alliance/Electronic Industries Association", "Telecommunications Industry Association/ Electronic Industries Alliance", "Television Industry Association/Electronic Industries Association"] },
+            { q: "Which data flow or transmission mode allows for unidirectional flow of data?", a: "Simplex", options: ["Full duplex", "Simplex", "Duplex", "F/full duplex"] },
+            { q: "Which layer in the OSI model is responsible for carrying frames between adjacent nodes?", a: "Data link", options: ["Network", "Transport", "Data link", "Physical"] },
+            { q: "A set of rules or procedures that govern how data is shared or sent over a communication media.", a: "Protocol", options: ["Protocol", "Memorandum", "Handover", "Handshake"] },
+            { q: "Which layer in the OSI model is responsible for log-in and log-out procedure?", a: "Session", options: ["Session", "Network", "Application", "Transport"] },
+            { q: "Which layer in the OSI model is responsible for route determination and selection?", a: "Network", options: ["Physical", "Transport", "Data link", "Network"] },
+            { q: "What internet protocol is used to map a known IP address to an unknown MAC address?", a: "ARP", options: ["ICMP", "UDP", "RARP", "ARP"] },
+            { q: "Which layer in the OSI model is responsible for format and code conversion services?", a: "Presentation", options: ["Transport", "Application", "Presentation", "Session"] },
+            { q: "Which of the following is one of the protocols found at the transport layer?", a: "UDP", options: ["UCP", "UDP", "TDC", "TDP"] },
+            { q: "Which data flow or transmission mode allows for bidirectional flow of data simultaneously?", a: "Full duplex", options: ["Simplex", "F/full duplex", "Full duplex", "Duplex"] },
+            { q: "An agency of the United Nations whose duties include setting standards for various areas within the communication field. Formerly known as CCITT, it establishes standards to ensure compatibility of telecommunication equipment of different manufacturers.", a: "ITU", options: ["ITU", "IANA", "ISO", "IEEE"] },
+            { q: "Which among the physical topologies is considered to be the most reliable?", a: "Mesh", options: ["Star", "Bus", "Ring", "Mesh"] },
+            { q: "Which layer in the OSI model is responsible for providing user services such as email and file transfer?", a: "Application", options: ["Transport", "Application", "Network", "Session"] },
+            { q: "Recent developments in the multimedia applications has increased the number of users and the amount of time each user spends on the network. What application/platform uses television over IP?", a: "PPLive", options: ["Telephony", "Skype", "YouTube", "PPLive"] },
+            { q: "In 1967, at an Association for Computing Machinery (ACM) meeting, ARPA of the USA National Defense presented its ideas for the ARPANET, a small network of connected computers. This ARPANET was the first public packet-switched computer network. What does ARPANET mean?", a: "Advanced Research Projects Agency Network", options: ["Advanced Research Protocols Agency Network", "Advanced Research Projects Automatic Network", "Advanced Retransmission Protocols Agency Network", "Advanced Research Projects Agency Network"] },
+            { q: "Recent developments in the multimedia applications has increased the number of users and the amount of time each user spends on the network. What application/platform uses video over IP?", a: "YouTube", options: ["Telephony", "Skype", "YouTube", "PPLive"] },
+            { q: "It is a group of network devices that allow communication between various connected devices that covers smaller areas such as home, office or schools.", a: "LAN", options: ["LAN", "MAN", "WAN", "Ethernet"] },
+            { q: "It is a network bigger than a LAN and covers a city or large campus. It connects several smaller networks in that area.", a: "MAN", options: ["LAN", "MAN", "WAN", "Ethernet"] },
+            { q: "Recent developments in the multimedia applications has increased the number of users and the amount of time each user spends on the network. What application/platform uses voice over IP?", a: "Telephony", options: ["Telephony", "Skype", "YouTube", "PPLive"] },
+            { q: "In the OSI model, error correction and retransmission are performed by the:", a: "Data link and Transport layer", options: ["Physical and data link layer", "Data link and Network layer", "Data link and Session layer", "Data link and Transport layer"] },
+            { q: "In the OSI model, providing independence from different data representation is performed by the:", a: "Presentation layer", options: ["Transport Layer", "Session layer", "Presentation layer", "Application layer"] },
+            { q: "In the OSI model, establishing, managing, and terminating sessions are performed by the:", a: "Session layer", options: ["Transport Layer", "Session layer", "Presentation layer", "Application layer"] },
+            { q: "In the OSI model, reliable process-to-process delivery is performed by the:", a: "Transport layer", options: ["Physical layer", "Network layer", "Data link layer", "Transport layer"] },
+            { q: "In the OSI model, format and code conversion services are performed by the:", a: "Presentation layer", options: ["Transport Layer", "Session layer", "Presentation layer", "Application layer"] },
+            { q: "TCP/IP model does not have __ layer but OSI model have this layer.", a: "Session layer", options: ["Transport layer", "Session layer", "Network layer", "Application layer"] },
+            { q: "In the OSI model, route determination is performed by the:", a: "Network layer", options: ["Physical layer", "Network layer", "Data link layer", "Transport layer"] },
+            { q: "In the OSI model, responsibility for carrying frames between adjacent nodes is performed by the:", a: "Data link layer", options: ["Physical layer", "Network layer", "Data link layer", "Transport layer"] },
+            { q: "In the OSI model, defining frames is performed by the:", a: "Data link layer", options: ["Physical layer", "Network layer", "Data link layer", "Transport layer"] },
+            { q: "In the OSI model, route selection is performed by the:", a: "Network layer", options: ["Physical layer", "Network layer", "Data link layer", "Transport layer"] },
+            { q: "In the OSI model, Interface to transmission media is performed by the:", a: "Physical layer", options: ["Physical layer", "Network layer", "Data link layer", "Transport layer"] },
+            { q: "In the OSI model, mechanical, electrical, and functional interface is performed by the:", a: "Physical layer", options: ["Physical layer", "Network layer", "Data link layer", "Transport layer", "E (Unknown extra option)"] },
+            { q: "In the OSI model, flow control is (are) performed by the:", a: "Data link and Transport layer", options: ["Physical and data link layer", "Data link and Network layer", "Data link and Session layer", "Data link and Transport layer"] },
+            { q: "In the OSI model, providing user services is performed by the:", a: "Application layer", options: ["Transport Layer", "Session layer", "Presentation layer", "Application layer"] },
+            { q: "In the OSI model, ensuring reliable transmission of data is (are) performed by the:", a: "Data link and Transport layer", options: ["Physical and data link layer", "Data link and Network layer", "Data link and Transport layer", "Data link and Session layer"] },
+            { q: "The OSI model used in data communications is developed by", a: "ISO", options: ["FCC", "IEEE", "ISO", "TCP/IP"] },
+            { q: "Federal Communications Commission (FCC) is a regulatory agency... In the Philippines, regulation is primarily vested in", a: "NTC", options: ["IECEP", "IEEE Phil. Section", "NTC", "DICT"] },
+            { q: "Which topology has all its nodes connected directly to one center point and has no other connections between nodes?", a: "Star", options: ["Ring", "Star", "Bus", "Mesh"] },
+            { q: "An Internet standard is a thoroughly tested specification... Upon recommendation from the Internet authorities, a draft may be published as an RFC. What does RFC mean?", a: "Request for Comment", options: ["Request for Comment", "Request for Connection", "Request for Control", "Repetition for Connection"] },
+            { q: "It refers to the variation in packet delay for streaming audio or video packets.", a: "Jitter", options: ["Noise", "Quality of service (QoS)", "Jitter", "Burst"] },
+            { q: "It is the biggest type of network, covering very large areas like countries or even the whole world. The internet is its most famous example.", a: "WAN", options: ["LAN", "MAN", "WAN", "Ethernet"] },
+            { q: "Recent developments in the multimedia applications has increased the number of users and the amount of time each user spends on the network. What application/platform uses view sharing?", a: "Skype", options: ["Telephony", "Skype", "YouTube", "PPLive"] },
+            { q: "In the OSI model, access for the end user is performed by the", a: "Application layer", options: ["Transport Layer", "Session layer", "Presentation layer", "Application layer"] },
+            { q: "In the OSI model, transmission of bits across the medium is performed by the", a: "Physical layer", options: ["Physical layer", "Network layer", "Data link layer", "Transport layer"] },
+            { q: "In the OSI model, communication with user's application program is performed by the", a: "Application layer", options: ["Transport Layer", "Session layer", "Presentation layer", "Application layer"] },
+        ];
+
+        // --- Global State Variables ---
+        const TIME_LIMIT_MINUTES = 40;
+        const TIME_LIMIT_SECONDS = TIME_LIMIT_MINUTES * 60;
+        let timerInterval;
+        let timeRemaining = TIME_LIMIT_SECONDS;
+        let currentMode = 'practice'; // Default mode
+        let quizActive = false;
+        
+        const quizContainer = document.getElementById('quiz-container');
+
+        // --- Utility Functions ---
+
+        // Function to shuffle an array (Fisher-Yates algorithm)
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function formatTime(totalSeconds) {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function updateTimerDisplay() {
+            const timerDisplay = document.getElementById('timer-display');
+            if (!timerDisplay) return;
+
+            timerDisplay.textContent = formatTime(timeRemaining);
+            
+            // Apply warning color when time is low (e.g., last 5 minutes)
+            if (timeRemaining <= 300) {
+                timerDisplay.classList.add('timer-warning');
+            } else {
+                timerDisplay.classList.remove('timer-warning');
+            }
+        }
+
+        function startTimer() {
+            if (timerInterval) stopTimer();
+            timeRemaining = TIME_LIMIT_SECONDS;
+            updateTimerDisplay();
+
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+
+                if (timeRemaining <= 0) {
+                    stopTimer();
+                    submitQuiz(true); // Auto-submit on timeout
+                }
+            }, 1000);
+        }
+
+        // --- Quiz Mode Logic ---
+
+        function setMode(mode) {
+            if (quizActive) return; // Cannot change mode mid-quiz
+
+            currentMode = mode;
+            document.getElementById('practice-btn').classList.remove('active');
+            document.getElementById('exam-btn').classList.remove('active');
+
+            const modeDescription = document.getElementById('mode-description');
+            const modeBtn = document.getElementById(`${mode}-btn`);
+            modeBtn.classList.add('active');
+
+            if (mode === 'practice') {
+                modeDescription.innerHTML = 'In **Practice Mode**, you get instant feedback and the correct answer if you are wrong.';
+                document.getElementById('current-mode-display').textContent = 'Practice';
+            } else {
+                modeDescription.innerHTML = 'In **Exam Mode**, your answers are locked, and results are shown only after submission or when the 40-minute timer runs out.';
+                document.getElementById('current-mode-display').textContent = 'Exam';
+            }
+            
+            // Update the start button text for better clarity
+            document.querySelector('.start-btn').textContent = `Start ${mode === 'exam' ? 'Exam' : 'Practice'}`;
+        }
+
+        function startQuiz() {
+            // Hide intro, show quiz elements
+            document.getElementById('quiz-intro').style.display = 'none';
+            document.getElementById('quiz-header').style.display = 'flex'; // Use flex for header layout
+            document.getElementById('quiz-container').style.display = 'block';
+            document.getElementById('submit-button').style.display = 'block';
+            document.getElementById('results').style.display = 'none'; // Ensure results are hidden
+
+            quizActive = true;
+            
+            // Randomize questions
+            shuffleArray(quizData);
+            renderQuiz();
+
+            if (currentMode === 'exam') {
+                document.getElementById('timer-display').style.visibility = 'visible';
+                startTimer();
+            } else {
+                // Hide timer display in practice mode
+                document.getElementById('timer-display').style.visibility = 'hidden';
+            }
+        }
+        
+        function exitQuiz() {
+            if (!quizActive) {
+                document.getElementById('results').style.display = 'none'; 
+            }
+            
+            stopTimer();
+            quizActive = false;
+
+            // Hide active quiz components
+            document.getElementById('quiz-header').style.display = 'none';
+            document.getElementById('quiz-container').style.display = 'none';
+            document.getElementById('submit-button').style.display = 'none';
+            
+
+            // Show intro screen
+            document.getElementById('quiz-intro').style.display = 'block';
+            
+            // Reset submit button state
+            const submitBtn = document.getElementById('submit-button');
+            submitBtn.disabled = false;
+            submitBtn.textContent = "Submit Quiz and Get Score";
+
+            // Re-render quiz to clear user selections and states
+            renderQuiz(); 
+        }
+
+        // --- Rendering ---
+        
+        function renderQuiz() {
+            quizContainer.innerHTML = ''; // Clear previous content
+
+            quizData.forEach((item, index) => {
+                const qContainer = document.createElement('div');
+                qContainer.className = 'question-card';
+                qContainer.id = `q-${index}`;
+
+                // Store correct answer on the card element for easy retrieval
+                qContainer.dataset.correctAnswer = item.a;
+
+                // Question Text
+                const qText = document.createElement('div');
+                qText.className = 'question-text';
+                qText.textContent = `${index + 1}. ${item.q}`;
+                qContainer.appendChild(qText);
+
+                // Options (shuffle options locally for each question)
+                let optionsToRender = [...item.options];
+                shuffleArray(optionsToRender);
+
+                optionsToRender.forEach((option, oIndex) => {
+                    const label = document.createElement('label');
+                    label.className = 'option-label';
+                    label.setAttribute('for', `q${index}-o${oIndex}`);
+                    // Store the value directly on the label for easier styling later
+                    label.dataset.value = option;
+
+                    const input = document.createElement('input');
+                    input.type = 'radio';
+                    input.name = `question-${index}`;
+                    input.id = `q${index}-o${oIndex}`; 
+                    input.value = option;
+                    
+                    // Attach the live check function only in Practice Mode
+                    if (currentMode === 'practice') {
+                        // Pass the question card to the live check function
+                        input.addEventListener('change', () => checkAnswerLive(qContainer));
+                    }
+                    
+                    label.appendChild(input);
+                    label.appendChild(document.createTextNode(option));
+                    qContainer.appendChild(label);
+                });
+
+                // Live Feedback container (hidden in Exam Mode, shown only for final score)
+                const feedback = document.createElement('div');
+                feedback.className = 'feedback';
+                qContainer.appendChild(feedback);
+
+                quizContainer.appendChild(qContainer);
+            });
+        }
+
+        // --- Interaction Logic ---
+        
+        // Live check answer functionality - only runs in Practice Mode
+        function checkAnswerLive(questionCard) {
+            if (currentMode !== 'practice') return;
+            
+            const correctAnswer = questionCard.dataset.correctAnswer;
+            const feedbackElement = questionCard.querySelector('.feedback');
+            const radioButtons = questionCard.querySelectorAll('input[type="radio"]');
+            
+            const selectedRadio = questionCard.querySelector('input[type="radio"]:checked');
+            const selectedValue = selectedRadio ? selectedRadio.value : null;
+
+            // 1. Reset state (in case the user changes their mind before selection is locked)
+            questionCard.classList.remove('correct-answer', 'wrong-answer');
+            questionCard.querySelectorAll('.option-label').forEach(label => {
+                label.classList.remove('correct-option', 'incorrect-option', 'disabled');
+                // Ensure only selected radio is still checked, but do not re-enable if already locked
+                if (label.querySelector('input').disabled) return;
+            });
+
+            if (!selectedValue) return;
+
+            // 2. Determine if the selected answer is correct
+            const isCorrect = selectedValue === correctAnswer;
+            
+            // 3. Provide live feedback and highlight options
+            if (isCorrect) {
+                feedbackElement.innerHTML = "✅ Correct! Great job.";
+                feedbackElement.className = 'feedback correct-text';
+                questionCard.classList.add('correct-answer');
+                
+                // Disable all options and style the correct one
+                radioButtons.forEach(radio => {
+                    radio.disabled = true;
+                    radio.parentElement.classList.add('disabled');
+                    if (radio.checked) {
+                        radio.parentElement.classList.add('correct-option');
+                    }
+                });
+
+            } else {
+                feedbackElement.innerHTML = `❌ Incorrect. The correct answer is: <strong>${correctAnswer}</strong>.`;
+                feedbackElement.className = 'feedback incorrect-text';
+                questionCard.classList.add('wrong-answer');
+                
+                // Disable all options and highlight the correct one
+                radioButtons.forEach(radio => {
+                    radio.disabled = true;
+                    radio.parentElement.classList.add('disabled');
+                    if (radio.value === correctAnswer) {
+                        radio.parentElement.classList.add('correct-option'); // Correct answer green
+                    } else if (radio.checked) {
+                        radio.parentElement.classList.add('incorrect-option'); // Incorrect selection red
+                    }
+                });
+            }
+            feedbackElement.style.display = 'block';
+        }
+
+        // Final score calculation and display
+        function submitQuiz(isTimeout = false) {
+            if (!quizActive) return;
+            
+            stopTimer();
+            quizActive = false;
+
+            let score = 0;
+            const total = quizData.length;
+            
+            // Ensure timer is visible if it was a timeout or if the user submits the exam
+            document.getElementById('timer-display').style.visibility = 'visible';
+
+            // Iterate over all questions to calculate score and provide final marking
+            quizData.forEach((item, index) => {
+                const questionCard = document.getElementById(`q-${index}`);
+                const selectedRadio = document.querySelector(`input[name="question-${index}"]:checked`);
+                const feedbackElement = questionCard.querySelector('.feedback');
+                const radioButtons = questionCard.querySelectorAll('input[type="radio"]');
+
+                
+                // 1. Reset/Clear existing classes (important for exam mode)
+                questionCard.classList.remove('correct-answer', 'wrong-answer');
+                questionCard.querySelectorAll('.option-label').forEach(label => {
+                    label.classList.remove('correct-option', 'incorrect-option', 'disabled');
+                });
+                
+                let userSelected = selectedRadio ? selectedRadio.value : null;
+                
+                // 2. Scoring and Final Feedback
+                if (userSelected === item.a) {
+                    score++;
+                    questionCard.classList.add('correct-answer');
+                    feedbackElement.innerHTML = "✅ Correct!";
+                    feedbackElement.className = 'feedback correct-text';
+                } else {
+                    questionCard.classList.add('wrong-answer');
+                    if (userSelected) {
+                        feedbackElement.innerHTML = `❌ Incorrect. The correct answer was: <strong>${item.a}</strong>.`;
+                    } else {
+                        feedbackElement.innerHTML = `⚠️ Unanswered. The correct answer was: <strong>${item.a}</strong>.`;
+                    }
+                    feedbackElement.className = 'feedback incorrect-text';
+                }
+                
+                feedbackElement.style.display = 'block';
+
+                // 3. Final color highlight and disable all
+                radioButtons.forEach(radio => {
+                    const label = radio.parentElement;
+                    radio.disabled = true;
+                    label.classList.add('disabled'); // Disable pointer events/hover
+
+                    if (radio.value === item.a) {
+                        label.classList.add('correct-option'); // Correct answer green
+                    } else if (radio.checked && radio.value !== item.a) {
+                        label.classList.add('incorrect-option'); // Incorrect choice red
+                    }
+                });
+            });
+
+            // Update the Timer Display if it was a timeout
+            if (isTimeout) {
+                document.getElementById('timer-display').textContent = 'Time Expired!';
+            }
+
+            // Hide the submission button and quiz header, display results
+            document.getElementById('submit-button').style.display = 'none';
+            document.getElementById('quiz-header').style.display = 'none';
+            
+            const resultsDiv = document.getElementById('results');
+            document.getElementById('final-mode-display').textContent = currentMode === 'exam' ? 'Exam' : 'Practice';
+            document.getElementById('score-display').textContent = `${score}/${total}`;
+            resultsDiv.style.display = 'block';
+        }
+
+        // --- Initialization ---
+
+        window.onload = () => {
+            // Set default mode on load (this updates the initial button state and description)
+            setMode(currentMode);
+        };
+    </script>
+</body>
+</html>
