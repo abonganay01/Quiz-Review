@@ -1,183 +1,178 @@
+/* --- Root & Reset --- */
 :root {
   --correct-bg: #ECFDF5;
   --correct-border: #10B981;
   --incorrect-bg: #FEF2F2;
   --incorrect-border: #EF4444;
+  --primary-focus: #4F46E5;
+  --text-main: #1F2937;
+  --bg-main: #F3F4F6;
+  --card-bg: #FFFFFF;
 }
 
-/* Page background / fonts */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  background-color: #F3F4F6;
+  background-color: var(--bg-main);
+  color: var(--text-main);
   -webkit-tap-highlight-color: transparent;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  line-height: 1.6; /* Increased slightly for better reading */
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased; /* Crisper text */
 }
 
-.dark body {
-  background-color: #111827;
+/* --- Dark Mode Variables --- */
+.dark {
+  --text-main: #E5E7EB;
+  --bg-main: #111827;
+  --card-bg: #1F2937;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-.dark ::-webkit-scrollbar-thumb { background: #4b5563; }
-
-/* Dynamic classes */
-.correct-answer {
-  border-color: var(--correct-border) !important;
-  background-color: #f0fdf4 !important;
-}
-.dark .correct-answer {
-  background-color: rgba(6,95,70,0.3) !important;
-  border-color: #059669 !important;
+/* --- Typography --- */
+h1, h2, h3, h4 {
+  color: inherit;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
 }
 
-.wrong-answer {
-  border-color: var(--incorrect-border) !important;
-  background-color: #fef2f2 !important;
+/* --- Layout Components --- */
+.question-card {
+  background-color: var(--card-bg);
+  border: 1px solid #E5E7EB;
+  border-radius: 0.5rem; /* Reduced radius for a simpler look */
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Minimal shadow */
 }
-.dark .wrong-answer {
-  background-color: rgba(127,29,29,0.3) !important;
-  border-color: #DC2626 !important;
+
+.dark .question-card {
+  border-color: #374151;
+  box-shadow: none; /* Flat look in dark mode is easier on eyes */
 }
 
-.correct-text { color: #059669; font-weight: 600; display: block; }
-.dark .correct-text { color: #34D399; }
+/* --- Interactive Options --- */
+.option-label {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  border: 2px solid #E5E7EB;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  min-height: 3.5rem;
+  /* NO TRANSITIONS: Instant feedback is better for study/focus */
+}
 
-.incorrect-text { color: #DC2626; font-weight: 600; display: block; }
-.dark .incorrect-text { color: #F87171; }
+/* Hover States - Instant Change */
+.option-label:hover:not(.disabled) {
+  background-color: #F9FAFB;
+  border-color: var(--primary-focus);
+}
 
-.option-label { transition: all 0.2s ease; touch-action: manipulation; }
+.dark .option-label:hover:not(.disabled) {
+  background-color: #374151;
+  border-color: #6366F1;
+}
 
+.dark .option-label {
+  border-color: #374151;
+}
+
+.option-label.disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+/* --- Accessibility Focus States (Crucial for keyboard study) --- */
+.option-label:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--primary-focus);
+  outline-offset: 2px;
+}
+
+/* --- Answer States --- */
 .correct-option {
   background-color: var(--correct-bg) !important;
   border-color: var(--correct-border) !important;
   color: #065F46;
-  font-weight: 600;
 }
+
 .dark .correct-option {
-  background-color: rgba(6,95,70,0.4) !important;
-  color: #D1FAE5;
+  background-color: rgba(6, 95, 70, 0.2) !important;
   border-color: #059669 !important;
+  color: #D1FAE5;
 }
 
 .incorrect-option {
   background-color: var(--incorrect-bg) !important;
   border-color: var(--incorrect-border) !important;
   color: #991B1B;
-  font-weight: 600;
 }
+
 .dark .incorrect-option {
-  background-color: rgba(127,29,29,0.4) !important;
-  color: #FECACA;
+  background-color: rgba(127, 29, 29, 0.2) !important;
   border-color: #DC2626 !important;
+  color: #FECACA;
 }
 
-.option-label.disabled { cursor: default; opacity: 0.95; }
-
-/* Timer warning */
-.timer-warning { color: #EF4444 !important; animation: pulse 1s infinite; }
-@keyframes pulse {
-  0%,100% { opacity: 1; } 50% { opacity: 0.5; }
+/* --- Form Elements --- */
+.cat-checkbox {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--primary-focus);
+  margin-right: 0.75rem;
 }
 
-/* Large touch checkbox */
-.cat-checkbox { width: 1.25rem; height: 1.25rem; border-radius: 0.3rem; accent-color: #4F46E5; }
-
-/* Prevent layout shift when bold */
-.font-fix { display: inline-block; }
-
-/* small animation classes used in markup */
-.animate-fade-in { animation: fadeIn .22s ease both; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-
-/* Visual dot transitions */
-.visual-dot { transition: transform 0.18s ease; }
-.scale-100 { transform: scale(1) !important; }
-.scale-0 { transform: scale(0) !important; }
-
-/* Responsive tweaks */
-@media (min-width: 768px) {
-  .start-btn { width: auto; padding-left: 2.5rem; padding-right: 2.5rem; }
+/* --- Feedback & Timer --- */
+.feedback {
+  padding: 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  border: 1px solid transparent; /* Prevents layout shift when border appears */
 }
 
-/* Additional Dark Mode Fixes */
-.dark body {
-  background-color: #111827;
-  color: #e5e7eb;
+.timer-warning {
+  color: #DC2626 !important;
+  font-weight: 700;
 }
 
-/* Question cards in dark mode */
-.dark .question-card {
-  background-color: #1f2937;
-  border-color: #374151;
-}
-
-/* Dark mode text colors */
-.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
-  color: #f3f4f6;
-}
-
-.dark p, .dark span, .dark label {
-  color: #e5e7eb;
-}
-
-/* Input/form styling in dark mode */
-.dark input[type="checkbox"],
-.dark input[type="radio"] {
-  background-color: #374151;
-  border-color: #4b5563;
-}
-
-.dark input[type="checkbox"]:checked,
-.dark input[type="radio"]:checked {
-  background-color: #4f46e5;
-  border-color: #4f46e5;
-}
-
-/* Feedback element dark mode */
-.dark .feedback {
-  background-color: #374151;
-  color: #e5e7eb;
-}
-
-/* Group hover states in dark mode */
-.dark .group:hover {
-  background-color: rgba(79, 70, 229, 0.1);
-}
-
-/* Ensure all text in option labels is visible in dark mode */
-.dark .option-label .textSpan {
-  color: #e5e7eb;
-}
-
-/* Category checkboxes container */
-.dark #category-checkboxes label,
-.dark #exam-category-checkboxes label {
-  background-color: #1f2937;
-  border-color: #374151;
-  color: #e5e7eb;
-}
-
-.dark #category-checkboxes label:hover,
-.dark #exam-category-checkboxes label:hover {
-  background-color: #374151;
-  border-color: #4b5563;
-}
-
-/* Header styling in dark mode */
-.dark .quiz-header,
-.dark #quiz-header {
-  background-color: #1f2937;
-  border-bottom-color: #374151;
-}
-
-/* Modal/dialog overlays */
-.dark .modal-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
-}
-
-/* Ensure timer displays correctly */
 .dark .timer-warning {
-  color: #ef4444;
+  color: #EF4444 !important;
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { 
+  background: #CBD5E1; 
+  border-radius: 4px; 
+}
+.dark ::-webkit-scrollbar-thumb { background: #4B5563; }
+
+/* --- Responsive --- */
+@media (max-width: 640px) {
+  .question-card {
+    padding: 1rem;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  
+  .option-label {
+    padding: 0.75rem;
+    font-size: 1rem; /* Prevent zooming on mobile inputs */
+  }
+}
+
+@media (min-width: 768px) {
+  .start-btn {
+    min-width: 200px;
+    padding: 0.75rem 2.5rem;
+  }
 }

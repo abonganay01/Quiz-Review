@@ -90,16 +90,16 @@ const Quiz = (function () {
     const eBtn = document.getElementById('exam-btn');
 
     if (mode === 'practice') {
-      pBtn.className = "flex-1 sm:flex-none py-3 px-4 md:px-8 rounded-lg text-sm font-bold transition-all duration-200 shadow-sm bg-white dark:bg-gray-600 text-primary dark:text-indigo-300";
-      eBtn.className = "flex-1 sm:flex-none py-3 px-4 md:px-8 rounded-lg text-sm font-bold transition-all duration-200 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200";
+      pBtn.className = "flex-1 sm:flex-none py-3 px-4 md:px-8 rounded-lg text-sm font-semibold transition-all duration-200 shadow-sm bg-white dark:bg-gray-600 text-primary dark:text-indigo-300";
+      eBtn.className = "flex-1 sm:flex-none py-3 px-4 md:px-8 rounded-lg text-sm font-semibold transition-all duration-200 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200";
       document.getElementById('category-selection').style.display = 'block';
       document.getElementById('exam-category-selection').style.display = 'none';
       dom.modeDescription.innerHTML = 'In <strong>Practice Mode</strong>, you get instant feedback.';
       dom.startBtn.textContent = 'Start Practice Session';
       dom.currentModeDisplay.textContent = 'Practice';
     } else {
-      pBtn.className = "flex-1 sm:flex-none py-3 px-4 md:px-8 rounded-lg text-sm font-bold transition-all duration-200 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200";
-      eBtn.className = "flex-1 sm:flex-none py-3 px-4 md:px-8 rounded-lg text-sm font-bold transition-all duration-200 shadow-sm bg-white dark:bg-gray-600 text-primary dark:text-indigo-300";
+      pBtn.className = "flex-1 sm:flex-none py-3 px-4 md:px-8 rounded-lg text-sm font-semibold transition-all duration-200 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200";
+      eBtn.className = "flex-1 sm:flex-none py-3 px-4 md:px-8 rounded-lg text-sm font-semibold transition-all duration-200 shadow-sm bg-white dark:bg-gray-600 text-primary dark:text-indigo-300";
       document.getElementById('category-selection').style.display = 'none';
       document.getElementById('exam-category-selection').style.display = 'block';
       dom.modeDescription.innerHTML = 'In <strong>Exam Mode</strong>, answers are locked until submission.';
@@ -114,9 +114,9 @@ const Quiz = (function () {
     container.innerHTML = '';
 
     const createSection = (title, items) => {
-      if (title) {
+        if (title) {
         const header = document.createElement('h3');
-        header.className = 'text-xs font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider pl-1';
+        header.className = 'text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider pl-1';
         header.textContent = title;
         container.appendChild(header);
       }
@@ -170,7 +170,7 @@ const Quiz = (function () {
     const createExamSection = (title, items) => {
       if (title) {
         const header = document.createElement('h4');
-        header.className = 'text-xs font-bold text-red-800 dark:text-red-200 mb-2 mt-4 uppercase';
+        header.className = 'text-xs font-semibold text-red-800 dark:text-red-200 mb-2 mt-4 uppercase';
         header.textContent = title;
         container.appendChild(header);
       }
@@ -386,11 +386,11 @@ const Quiz = (function () {
       qHeader.className = 'flex items-start mb-4';
 
       const qNum = document.createElement('span');
-      qNum.className = 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-bold px-2 py-1 rounded mr-3 mt-1 min-w-[2rem] text-center';
+      qNum.className = 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-medium px-2 py-1 rounded mr-3 mt-1 min-w-[2rem] text-center';
       qNum.textContent = `${index + 1}`;
 
       const qText = document.createElement('h3');
-      qText.className = 'text-base sm:text-lg font-bold text-gray-800 dark:text-gray-100 leading-snug';
+      qText.className = 'text-base sm:text-lg font-medium text-gray-800 dark:text-gray-100 leading-snug';
       qText.textContent = item.q;
 
       qHeader.appendChild(qNum);
@@ -482,13 +482,13 @@ const Quiz = (function () {
     feedbackEl.classList.remove('correct-text', 'incorrect-text');
 
     feedbackEl.innerHTML = isCorrect
-      ? `<div class="flex items-center text-green-700 dark:text-green-400 font-bold text-base">
+      ? `<div class="flex items-center text-green-700 dark:text-green-400 font-semibold text-base">
            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
            </svg> Correct! Great job.
          </div>`
       : `<div class="text-red-700 dark:text-red-400">
-           <div class="font-bold flex items-center mb-1 text-base">
+           <div class="font-semibold flex items-center mb-1 text-base">
              <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
              </svg>
