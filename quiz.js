@@ -49,6 +49,11 @@ const Quiz = (function () {
     { key: 'LAW_RA9292', label: 'RA 9292 – Electronics Engineering Law' }
   ];
 
+  const MOCK_BOARD_KEYS = [
+    { key: 'MOCK_BOARD_MATH', label: 'Mock Board - Mathematics' },
+    { key: 'MOCK_BOARD_EST', label: 'Mock Board - EST' }
+  ];
+
   // --- Utilities ---
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -148,6 +153,7 @@ const Quiz = (function () {
       container.appendChild(grid);
     };
 
+    createSection('Mock Board Examinations', MOCK_BOARD_KEYS);
     createSection('Data Communications', DATA_COMMS_KEYS);
     createSection('ECE Laws & Regulations', ECE_LAW_KEYS);
   }
@@ -165,6 +171,11 @@ const Quiz = (function () {
 
     const examLawKeys = [
       { key: 'EXAM_LAWS', label: 'Telecom & ICT Laws (All RAs)' }
+    ];
+
+    const examMockKeys = [
+        { key: 'MOCK_BOARD_MATH', label: 'Mock Board - Mathematics' },
+        { key: 'MOCK_BOARD_EST', label: 'Mock Board - EST' }
     ];
 
     const createExamSection = (title, items) => {
@@ -202,7 +213,8 @@ const Quiz = (function () {
       container.appendChild(grid);
     };
 
-    createExamSection('', examDataKeys);
+    createExamSection('General Selection', examDataKeys);
+    createExamSection('Mock Board Exams', examMockKeys);
     createExamSection('Legal & Regulatory', examLawKeys);
   }
 

@@ -2,8 +2,10 @@
  * questions.js
  * Full question dataset — rearranged/cleaned:
  * - Exact duplicates that were repeated in EXERCISE_OSI_TCP_IP (and already present in OSI_DATA_COMMS)
- *   were removed from EXERCISE_OSI_TCP_IP so each question appears in the most appropriate category only.
+ * were removed from EXERCISE_OSI_TCP_IP so each question appears in the most appropriate category only.
  * - LAW_ALL and ALL are constructed from the single source arrays to avoid duplication.
+ * - Added MOCK_BOARD_MATH and MOCK_BOARD_EST categories.
+ * - Cleaned up LaTeX syntax in Mock Board questions for readability.
  */
 
 window.QUIZ_DATA = (function () {
@@ -263,6 +265,104 @@ window.QUIZ_DATA = (function () {
       { q: "It is the formal application layer protocol that defines the message transfer agent (MTA) client and server in the Internet. It defines how commands and responses must be sent back and forth.", a: "SMTP (Simple Mail Transfer Protocol)", options: ["TELNET (Terminal Network", "FTP (File Transfer Protocol)", "DNS (Domain Name System)", "SMTP (Simple Mail Transfer Protocol)", "SNMP (Simple Network Management Protocol)"] },
       { q: "It is the standard mechanism provided by TCP/IP for copying a file from one host to another. It differs from other client/server applications in that it establishes two connections between the hosts. One connection is used for data transfer, the other for control information (commands and responses).", a: "FTP (File Transfer Protocol)", options: ["TELNET (Terminal Network)", "DNS (Domain Name System)", "SNMP (Simple Network Management Protocol)", "SMTP (Simple Mail Transfer Protocol)", "FTP (File Transfer Protocol)"] },
       { q: "It is the standard TCP/IP protocol for virtual terminal service as proposed by the International Organization for Standards (ISO). It is a general-purpose client/server application program that enables the establishment of a connection to a remote system in such a way that the local terminal appears to be a terminal at the remote system. It allows the user to log on to a remote machine, giving the user access to the remote system.", a: "TELNET (Terminal Network)", options: ["SMTP (Simple Mail Transfer Protocol", "TELNET (Terminal Network)", "FTP (File Transfer Protocol)", "SNMP (Simple Network Management Protocol)", "DNS (Domain Name System)"] }
+    ],
+
+    MOCK_BOARD_MATH: [
+        { q: "The Z-transform is primarily used in.", a: "Discrete-time systems", options: ["Continuous systems", "Discrete-time systems", "Analog circults", "Static structures"] },
+        { q: "A ladder 10 feet long is leaning against a vertical wall. If the bottom of the ladder slides away from the wall at a rate of 2 ft/s, how fast is the top of the ladder sliding down the wall when the bottom is 6 feet from the wall?", a: "3/2 ft/s", options: ["3/2 ft/s", "6/5 π/s", "4/3 ft/s", "8/3 ft/s"] },
+        { q: "How many petals are in the graph of a rose curve with an equation of r = 100cos(4θ).", a: "8", options: ["8", "16", "4", "100"] },
+        { q: "Which of the following best describes a function?", a: "A relation where each Input has exactly one output", options: ["A relation where each Input has exactly one output", "A relation where Inputs can have multiple outputs", "A process that always increases values", "A set of ordered pairs with no restrictions"] },
+        { q: "A Fourier series represents a function as:", a: "A sum of sine and cosine terms", options: ["A product of polynomials", "A sum of sine and cosine terms", "A sum of exponentials only", "A series of square waves"] },
+        { q: "If f'(x) changes from negative to positive at x = c, then c is a:", a: "Local minimum", options: ["Local maximum", "Local minimum", "Point of inflection", "Critical obstruction"] },
+        { q: "The general solution of a first-order differential equation typically contains:", a: "One arbitrary constant", options: ["No constant", "No derivatives", "One arbitrary constant", "Two arbitrary constants"] },
+        { q: "Find the equation of the tangent line to the curve x³ + y³ = 2xy at point (1, 1).", a: "x+y-2=0", options: ["x+y-2=0", "c-y=0", "y-x+2=0", "x+y=0"] },
+        { q: "The solution to a differential equation with an initial condition is called:", a: "Particular solution", options: ["General solution", "Particular solution", "Exact solution", "Homogeneous solution"] },
+        { q: "A related rates problem involves:", a: "Relating changes in two quantities over time", options: ["Solving simultaneous equations", "Relating changes in two quantities over time", "Maximizing functions", "Minimizing quadratic forms"] },
+        { q: "Determine the area enclosed by the two curves y = x² and y² = 8x.", a: "8/3", options: ["8/3", "12/3", "10/3", "14/3"] },
+        { q: "The solution curve to dy/dx = x + y is:", a: "An exponential-type curve", options: ["A straight line", "A family of parabolas", "An exponential-type curve", "A trigonometric function"] },
+        { q: "Find the length of the curve y = (x-1)^(3/2) from x = 1 to x = 5.", a: "9.073", options: ["12.412", "7.106", "16.521", "9.073"] },
+        { q: "Water is leaking from a tank at the rate of R(t) = 5arctan(t/5) gallons per hour, where t is the number of hours since the leak began. To the nearest gallon, how much water will leak out during the first day?", a: "124", options: ["7", "24", "12", "124"] },
+        { q: "What is the solution to a 4th order differential equation with characteristic roots r = 0, 0, 2, -2?", a: "y = C₁ + C₂x + C₃e^(2x) + C₄e^(-2x)", options: ["y = C₁ + C₂e^(4x) + C₃e^(-x) + C₂x", "y = C₁x + C₂x² + C₃e^(2x) + C₄e^(-2x)", "y = C₁e^(2x) + C₂e^(-2x) + C₃e^(2x) + C₄e^(-2x)", "y = C₁ + C₂x + C₃e^(2x) + C₄e^(-2x)"] },
+        { q: "What is the integral of sec²x dx?", a: "tan x + C", options: ["sec x + c", "csc x + C", "tan x + C", "cot x + C"] },
+        { q: "Given the differential equation dy/dx = 3x², y(0) = 4. What is the value of y(2)?", a: "12", options: ["8", "16", "12", "20"] },
+        { q: "Find the integral of dx / (1 + x²).", a: "tan⁻¹(x) + C", options: ["ln|1 + x²| + C", "tan⁻¹(x) + C", "sec⁻¹(x) + C", "x(1 + x²) + C"] },
+        { q: "Which is not a valid interpretation of the derivative?", a: "Maximum value of a function", options: ["Slope of the tangent line", "Instantaneous rate of change", "Maximum value of a function", "Linear approximation of the function"] },
+        { q: "The integral of a derivative f'(x) is always:", a: "f(x) - c", options: ["t(x) + c", "Conty", "f'(x) + c", "f(x) - c"] },
+        { q: "Given the Bernoulli differential equation dy/dx + y = y². With v = 1/y, what is the resulting linear equation in v?", a: "dv/dx - v = -1", options: ["dv/dx - v = -1", "dv/dx + v = 1", "dv/dx + v = -1", "dv/dx - v = 1"] },
+        { q: "The Laplace transform of a second derivative is:", a: "s²F(s) - sf(0) - f'(0)", options: ["s²F(s) - sf(0) - f'(0)", "sF(s) - f(0)", "s*F(s)", "F''(s)"] },
+        { q: "What is the general solution of dy/dx = (1/x)ln x?", a: "y = ln(ln x) + c", options: ["y = ln(ln x) + c", "y = ln x + c", "y = ln(ln(ln x)) + C", "y = 1/ln x + c"] },
+        { q: "Find the integral of xeˣ dx.", a: "xeˣ - eˣ + C", options: ["xeˣ - eˣ + C", "eˣ + C"] },
+        { q: "Determine the surface area obtained by rotating y = ∛x from y = 1 to y = 2 about the y-axis.", a: "199.48", options: ["199.48", "197.26", "198.373", "196.15"] },
+        { q: "A first order separable differential equation means:", a: "Its variables can be separated on different sides of the equation.", options: ["Its variables can be separated on different sides of the equation.", "It is homogeneous.", "It has unique solutions.", "It contains higher derivatives."] },
+        { q: "The Laplace transform of a signal often involves complex numbers to represent:", a: "Frequency-domain behavior", options: ["Static values", "Frequency-domain behavior", "Time decay only", "Initial conditions"] },
+        { q: "Homogeneous first-order equations can be solved by:", a: "Substitution y/x", options: ["Euler's method", "Substitution y/x", "Laplace transform", "Taylor series"] },
+        { q: "Determine the surface area obtained by rotating y = √(9 - x²) from x = -2 to x = 2 about the x-axis.", a: "24π", options: ["21π", "23π", "22π", "24π"] },
+        { q: "Which of the following ODEs is separable?", a: "y' = xy", options: ["y' + y tan x = 0", "y' = xy", "y' + y/x = sin x", "y' = x + y"] },
+        { q: "Determine the Laplace transform of f(t) = 2sin(4t) - 3cos(4t).", a: "(8 - 3s) / (s² + 16)", options: ["(8 - 3s) / (s² + 4)", "(2s - 12) / (s² + 4)", "(8 - 3s) / (s² + 16)", "(2s - 12) / (s² + 15)"] },
+        { q: "Which of the following equations is not linear?", a: "dy/dx + y² = x", options: ["dy/dx + y = x", "dy/dx + x²y = sin x", "dy/dx + y² = x", "y' + 3y = 0"] },
+        { q: "Find the Laplace transform of x(t) = sinh(4t), t > 0.", a: "4 / (s² - 16)", options: ["4 / (s² + 16)", "4 / (s² - 16)", "s / (s² + 16)", "s / (s² - 16)"] },
+        { q: "Find the area bounded by the curve x² - 12x - 5y + 11 = 0 and the x-axis.", a: "33.33 u²", options: ["23.33 u²", "43.33 u²", "33.33 u²", "53.33 u²"] },
+        { q: "A point where concavity is changing is called a:", a: "Inflection point", options: ["Critical point", "Stationary point", "Inflection point", "Minima"] },
+        { q: "Which of the following best defines a complex number?", a: "A number with both real and imaginary parts", options: ["A number that cannot be expressed in decimal form", "A number with both real and imaginary parts", "A number greater than zero", "A purely imaginary number"] },
+        { q: "Water is poured into a conical tank at a constant rate of 12 ft³/min. The tank stands with its point down, with a height of 20 ft and a radius of 10 ft. How fast is the water level rising when the water is 8 ft deep?", a: "0.239 ft/min", options: ["0.239 ft/min", "3.820 ft/min", "0.060 ft/min", "0.119 ft/min"] },
+        { q: "Given the area bounded by the curve y² = x, the line x = 4 and the x-axis. What is the volume generated when this area is revolved about the y-axis?", a: "80.4 cu. units", options: ["78.1 cu. units", "62.2 cu. units", "80.4 cu. units", "54.7 cu. units"] },
+        { q: "Which of the following equations is a variable separable differential equation?", a: "(y + x²y)dx = (4x + xy²)dy", options: ["(y + x²y)dx = (4x + xy²)dy", "2xy dx = (1 + xy)dy", "(x + y)dx - 2y dy = 0", "y² dx + (2x - 3y)dy = 0"] },
+        { q: "What does it mean for a series to converge?", a: "Its sum approaches a finite limit", options: ["Its terms alternate signs", "Its sum approaches a finite limit", "There series has a factorial", "The sequence of terms is bounded"] },
+        { q: "Find the surface area of the torus formed by revolving a circle x² + (y-1)² = 9 about the line x = 5.", a: "60π²", options: ["30π", "30π²", "60m", "60π²"] },
+        { q: "The Laplace transform is most useful in solving:", a: "Differential equations", options: ["Algebraic equations", "Differential equations", "Trigonometric Identities", "Statistical models"] }
+    ],
+
+    MOCK_BOARD_EST: [
+        { q: "In the Shannon limit for information capacity theorem, if the bandwidth is reduced by 4 times while maintaining the signal-to-noise ratio of the transmission medium at its original ratio, what is the effect on its maximum capacity?", a: "Reduced by 4 times", options: ["Reduced by two", "Reduced by 4 times", "Doubled", "Increased by four times"] },
+        { q: "Typically, the velocity factor of the materials used in transmission lines range from", a: "0.6 to 0.9", options: ["0.6 to 0.9", "1.0 to 0.9", "0.1 to 0.5", "0.6 to 0.8"] },
+        { q: "An AM transmitter has a carrier power of 1000 W. The total sideband power Is measured to be 250 W (single-tone modulation). Find the modulation index.", a: "0.7", options: ["0.5", "0.8", "0.7", "1.0"] },
+        { q: "Bit rate is the number of bits per second. Baud rate is the number of signal elements per second. In the analog transmission of digital data, the baud rate is", a: "less than or equal to", options: ["equal to the bit rate..", "less than", "greater than", "less than or equal to"] },
+        { q: "Overmodulation in AM primarily causes:", a: "Envelope distortion", options: ["Reduced bandwidth", "Higher carrier power", "Envelope distortion", "Lower sideband power"] },
+        { q: "What property distinguishes digital radio systems from conventional analog communications system?", a: "The nature of the modulating signal", options: ["The type of carrier used", "The nature of the modulating signal", "The type of modulation of data to be used", "The nature of the transmitter and receiver used"] },
+        { q: "In digital modulation, the levels of a signal may reduce the reliability of the system.", a: "Increasing", options: ["Increasing", "maintaining", "decreasing", "changing"] },
+        { q: "In an FM system, the maximum frequency deviation Is 75 kHz and the highest modulating frequency is 15 kHz. Determine the modulation Index.", a: "5", options: ["2", "4", "3", "5"] },
+        { q: "The result whenever the sampling rate is less than twice the highest audio frequency.", a: "Allasing", options: ["Frequency synthesis", "Overload distortion", "Allasing", "Quantizing noise"] },
+        { q: "In PCM the samples are dependent on", a: "Quantization level", options: ["Time", "Frequency", "Quantization level", "Interval between quantization level"] },
+        { q: "Analog to digital conversion includes:", a: "Sampling & Quantization", options: ["Sampling", "Sampling & Quantization", "Quantization", "None of the choices"] },
+        { q: "The dynamic range of a system is the ratio of", a: "the strongest transmittable signal to the weakest discernible signal", options: ["the strongest transmittable signal to the weakest discernible signal", "the maximum rate of conversion to the minimum rate of conversion", "the maximum bits per sample to the minimum bits per sample", "None of the cholces"] },
+        { q: "What is true about aliasing and foldover distortion?", a: "They are the same thing", options: ["they are two types of sampling error", "you can have one or the other, but not both", "Aliasing is a technique to prevent foldover distortion", "They are the same thing"] },
+        { q: "The Immediate result of sampling is:", a: "PAM", options: ["a sample alias", "PCM", "PAM", "PDM"] },
+        { q: "A type of modulation scheme that changes the amplitude of the carrler with respect to the modulating signal.", a: "AM", options: ["PM", "FM", "AM", "SM"] },
+        { q: "Solve for the characteristic Impedance of a line having a capacitance of 1100 pF and an inductance of 11 μΗ.", a: "100 ohms", options: ["90 ohms", "110 ohms", "100 ohms", "75 ohms"] },
+        { q: "The basic modulator and demodulator circuits in PSK are,", a: "balanced modulators", options: ["PLLS", "shift registers", "balanced modulators", "linear summers"] },
+        { q: "A reflection coefficient of 0.782 has a return loss of how many dB?", a: "2.14 dB", options: ["3.14 dB", "1.14 dB", "2.14 dB", "0.14 dB"] },
+        { q: "The envelope of which of the following remains constant?", a: "FM", options: ["AM", "DSB-FC", "FM", "SSB"] },
+        { q: "The signals which are obtained by encoding each quantized signal into a digital word is called as:", a: "PCM signal", options: ["PAM signal", "Sampling and quantization", "PCM signal", "FM signal"] },
+        { q: "A communication link uses an AM DSB-SC system and a standard AM system with the same message and same peak envelope power. Which has lower carrier-power requirement for the same information?", a: "DSB-SC", options: ["Standard AM", "Cannot be determined", "DSB-SC", "Both equal"] },
+        { q: "A device that converts a balanced line to an unbalanced line of a transmission system?", a: "balun", options: ["hybrid", "directional coupler", "stub", "balun"] },
+        { q: "The maximum peak-to-peak value of an AM envelope is 16 V and the minimum is 4 V. Determine the modulation index.", a: "0.6", options: ["0.25", "0.6", "0.5", "0.75"] },
+        { q: "The velocity factor for a transmission line", a: "depends on the dielectric constant of the material used", options: ["depends on the dielectric constant of the material used", "Increases the velocity along the transmission line", "is governed by the skin effect", "is higher for a solid dielectric than for air"] },
+        { q: "The bandwidth required for conventional AM with a maximum modulating frequency ' ' is:", a: "2fm", options: ["1m", "4f", "2fm", "fm / 2"] },
+        { q: "Consider an extremely noisy channel in which the value of the signal-to-noise ratio is almost zero. In other words, the noise Is so strong that the signal is faint. For this channel the capacity is calculated as:", a: "zero", options: ["maximum", "half the bandwidth", "zero", "None of the choices"] },
+        { q: "Modulation is used to", a: "Allow the use of practical antennas", options: ["Increase the carrier power", "Reduce the bandwidth used", "Allow the use of practical antennas", "Shorten the transmission channel"] },
+        { q: "is the ratio of reflected voltage to the forward travelling voltage.", a: "reflection coefficient", options: ["SWR", "reflection coefficient", "VSWR", "ISWR"] },
+        { q: "A Yagi-Uda antenna is designed to receive signals centered at 450 MHz. Calculate the length of the driven element", a: "0.3167 m", options: ["0.355 m", "0.453 m", "0.3167 m", "1.267 m"] },
+        { q: "In an FM system, the maximum frequency deviation is 75 kHz and the highest modulating frequency Is 15 kHz. What is the bandwidth?", a: "180 kHz", options: ["90 kHz", "180 kHz", "150 kHz", "240 kHz"] },
+        { q: "The transmitting antenna has a gain of 10 dB, and power output of 6000 W. Determine the ERP.", a: "60 kW", options: ["80 KW", "60 kW", "70 KW", "50 KW"] },
+        { q: "A communication link uses an AM DSB-SC system and a standard AM system with the same message and same peak envelope power. Which has better power efficiency?", a: "DSB-SC", options: ["Standard AM", "Both equal", "DSB-SC", "Cannot be determined"] },
+        { q: "An antenna has a radiation resistance of 72 , a loss resistance of 80 and a power gain of 16. Find the directivity gain.", a: "17.78", options: ["19", "17.78", "15.67", "13.33"] },
+        { q: "Compared to AM broadcasting, FM broadcasting typically uses:", a: "Higher carrier frequencies and higher bandwidth,", options: ["Lower carrier frequencies and lower bandwidth", "Higher carrier frequencies and higher bandwidth,", "Lower carrier frequencies and higher bandwidth", "Higher carrier frequencies and lower bandwidth"] },
+        { q: "What is the orientation of the electric field of an antenna to the earth's surface and antenna structure?", a: "Polarization", options: ["Vertical", "Collimation", "Polarization", "Horizontal"] },
+        { q: "The following are considered primary line constants except", a: "complex propagation constant", options: ["conductance", "resistance", "capacitance", "complex propagation constant"] },
+        { q: "In communications system, noise is most likely to affect the signal at the?", a: "Recelver", options: ["Transmitter", "Channel", "Recelver", "Antenna"] },
+        { q: "Determine the characteristic Impedance for a quarter wavelength transformer that is used to match a section of the transmission line with the characteristic Impedance of 75 to 80 load.", a: "77.46 ohms", options: ["75 ohms", "67 ohms", "25 ohms", "77.46 ohms"] },
+        { q: "Demodulation is done at the:", a: "Receiver", options: ["Transmitter", "Channel", "Receiver", "Antenna"] },
+        { q: "Width measured In degrees of a major lobe between end of the lobe at which the relative power is one half (-3dB) its value from the peak of the lobe.", a: "Beamwidth", options: ["Beamwidth", "Wavelength", "Radiation", "Bandwidth"] },
+        { q: "In frequency modulation, the modulation index is defined as:", a: "Ratio of frequency deviation to message frequency", options: ["Ratlo of carrier frequency to message frequency", "Ratio of message amplitude to carrier amplitude", "Ratio of frequency deviation to message frequency", "Product of frequency deviation and message frequency"] },
+        { q: "We need to send 265 kbps over a noiseless channel with a bandwidth of 20 kHz. How many signal levels do we need?", a: "128 levels", options: ["96 levels", "4 levels", "128 levels", "64 levels"] },
+        { q: "An AM signal has carrler power of 500 W and is 50% modulated by a single sine wave. What is the total power?", a: "562.5 W", options: ["531.25 W", "625 W", "562.5 W", "750 W"] },
+        { q: "A 500 lossless line terminated in a purely resistive load has a voltage standing-wave ratio of 3. Find all the possible values of .", a: "150 ohms and 15 ohms", options: ["100 ohms and 20 ohms", "150 ohms and 15 ohms", "200 ohms and 24 ohms", "300 ohms and 22 ohms"] },
+        { q: "In PM, when the modulating signal amplitude increases, the:", a: "Phase deviation Increases", options: ["Phase deviation Increases", "Phase deviation decreases", "Carrier amplitude Increases", "Carrier frequency Increases linearly"] },
+        { q: "A carrier of frequency 1 MHz Is AM by a 5 kHz tone with m = 0.8. Carrier power is 100 W. Which set shows all frequency components?", a: "0.995 MHz, 1 MHz, 1.005 MHz", options: ["1 MHz only", "0.995 MHz, 1 MHz, 1.005 MHz", "0.995 MHz and 1.005 MHz only", "5 kHz and 1 MHz only"] },
+        { q: "Shannon's theorem describes the parameters affecting communication channel capacity. In the Shannon's formula a low value of SNR indicates that", a: "There is a need to install repeater", options: ["Transmission is most likely error free", "More capacity can be accommodated", "There is a need to install repeater", "Data is 100% error free"] },
+        { q: "Which of the following is true for FM but not for AM?", a: "Amplitude limiting Improves noise performance", options: ["Information is carried in the amplitude of the carrier", "Envelope detection is sufficient for demodulation", "Amplitude limiting Improves noise performance", "Carrier amplitude must vary with the message"] },
+        { q: "If a cable has a velocity factor of 0.8, how long would it take a signal to travel 3000 kilometers along the cable?", a: "12.5 ms", options: ["12.5 ms", "75 με", "15 ms", "88 μs"] },
+        { q: "A DSB-SC system and an SSB system transmit the same baseband signal with the same transmitted power. Which system occuples less bandwidth?", a: "SSB", options: ["DSB-SC", "SSB", "Both occupy the same bandwidth", "Depends on modulation Index"] }
     ]
 
   };
@@ -284,6 +384,8 @@ window.QUIZ_DATA = (function () {
     ...(data.HW_CABLING_TOOLS || []),
     ...(data.IP_ADDRESSING_SUBNET || []),
     ...(data.EXERCISE_OSI_TCP_IP || []),
+    ...(data.MOCK_BOARD_MATH || []),
+    ...(data.MOCK_BOARD_EST || []),
     ...data.LAW_ALL
   ];
 
