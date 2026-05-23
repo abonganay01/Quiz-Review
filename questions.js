@@ -41,7 +41,7 @@ window.QUIZ_DATA = (function () {
       { q: "In the OSI model, defining frames is performed by the:", a: "Data link layer", options: ["Physical layer", "Network layer", "Data link layer", "Transport layer"] },
       { q: "In the OSI model, route selection is performed by the:", a: "Network layer", options: ["Physical layer", "Network layer", "Data link layer", "Transport layer"] },
       { q: "In the OSI model, Interface to transmission media is performed by the:", a: "Physical layer", options: ["Physical layer", "Network layer", "Data link layer", "Transport layer"] },
-      { q: "In the OSI model, mechanical, electrical, and functional interface is performed by the:", a: "Physical layer", options: ["Physical layer", "Network layer", "Data link layer", "Transport layer", "E (Unknown extra option)"] },
+      { q: "In the OSI model, mechanical, electrical, and functional interface is performed by the:", a: "Physical layer", options: ["Physical layer", "Network layer", "Data link layer", "Transport layer"] },
       { q: "In the OSI model, flow control is (are) performed by the:", a: "Data link and Transport layer", options: ["Physical and data link layer", "Data link and Network layer", "Data link and Session layer", "Data link and Transport layer"] },
       { q: "In the OSI model, providing user services is performed by the:", a: "Application layer", options: ["Transport Layer", "Session layer", "Presentation layer", "Application layer"] },
       { q: "In the OSI model, ensuring reliable transmission of data is (are) performed by the:", a: "Data link and Transport layer", options: ["Physical and data link layer", "Data link and Network layer", "Data link and Transport layer", "Data link and Session layer"] },
@@ -121,6 +121,48 @@ window.QUIZ_DATA = (function () {
       { q: "Find the new mask for subnet 1 (16 addresses) from the block 17.12.40.0/27.", a: "/28", options: ["/29", "/30", "/28", "/27"] },
       { q: "The RIR is an organization that manages the allocation and registration of Internet number resources... RIR stands for:", a: "Regional Internet Registries", options: ["Regional Internal Registries", "Registries Internet Regional", "Regional Internet Registries", "Registries Internal Regional"] },
       { q: "The IP address space is managed globally by the IANA... IANA stands for:", a: "Internet Assigned Numbers Authority", options: ["Internet Assigned Numbers Authority", "Internal Assigned Numbers Authority", "Internet Associative Numbers Authoritative", "Internal Associative Numbers Authority"] }
+    ],
+
+
+    // EXERCISE_OSI_TCP_IP: kept as an exercises pool but duplicates removed if already present in OSI_DATA_COMMS/IP_ADDRESSING_SUBNET
+    // Only unique exercise questions that were not exact duplicates are kept here.
+    EXERCISE_OSI_TCP_IP: [
+      { q: "How many layers are there in the OSI model?", a: "7", options: ["4", "7", "6", "5"] },
+      { q: "Identify the OSI layer that defines frames.", a: "Data link layer", options: ["Physical layer", "Data link layer", "Network layer", "Transport layer"] },
+      { q: "Identify the OSI layer that performs transmission of bit stream across physical medium.", a: "Physical layer", options: ["Physical layer", "Data link layer", "Network layer", "Transport layer"] },
+      { q: "Identify the OSI layer that performs process-to-process message delivery.", a: "Transport layer", options: ["Application layer", "Physical layer", "Data link layer", "Network layer", "Transport layer"] },
+      { q: "Identify the OSI layer that establishes, manages and terminates sessions.", a: "Session layer", options: ["Transport layer", "Session layer", "Presentation layer", "Application layer"] },
+      { q: "Identify the OSI layer that provides log-in and log-out procedures.", a: "Session layer", options: ["Transport layer", "Session layer", "Presentation layer", "Application layer"] },
+      { q: "Identify the OSI layer that provides independence from different data representation", a: "Presentation layer", options: ["Transport layer", "Session layer", "Presentation layer", "Application layer"] },
+      { q: "Identify the OSI layer that formats and codes conversion services.", a: "Presentation layer", options: ["Transport layer", "Session layer", "Presentation layer", "Application layer"] },
+      { q: "Identify the OSI layer that provides access for the end user.", a: "Application layer", options: ["Network layer", "Data link layer", "Transport layer", "Application layer"] },
+      { q: "Identify the OSI layer that communicates directly with user's application program.", a: "Application layer", options: ["Transport layer", "Session layer", "Presentation layer", "Application layer"] },
+      { q: "A packet in TCP (Transmission Control Protocol) is called", a: "Segment", options: ["Segment", "Bits", "Frames", "Datagrams"] },
+      { q: "The unit of data transfer between two devices using TCP software is called a", a: "Segment", options: ["Frames", "Packet", "Datagram", "Segment"] },
+      { q: "A transportation unit in an SCTP protocol is termed as", a: "Packet", options: ["Datagram", "Frames", "Packet", "Segment"] },
+      { q: "Process-to-process delivery at the transport layer needs two identifiers, IP address and the port number, at each end to make connection. The combination of an IP address and a port number is called a", a: "Socket address", options: ["Port address", "Logical address", "Physical address", "Socket address"] },
+      { q: "Which protocol does not belong to the Transport layer?", a: "FTP", options: ["UDP", "SCTP", "FTP", "TCP"] },
+      { q: "Which protocol does not belong to the Network layer?", a: "SMTP", options: ["RARP", "ARP", "ICMP", "SMTP", "IGMP"] },
+      { q: "Which protocol does not belong to the Application layer?", a: "ARP", options: ["SMTP", "ARP", "DNS", "FTP", "SNMP"] },
+      { q: "A network layer protocol that sends query and error reporting messages. It is a mechanism used by hosts and gateways to send notification of datagram problems back to the sender.", a: "ICMP (Internet Control Message Protocol)", options: ["RARP (Reverse Address Resolution Protocol)", "ARP (Address Resolution Protocol)", "IGMP (Internet Group Message Protocol)", "ICMP (Internet Control Message Protocol)", "IPv4 (Internet Protocol version 4)"] },
+      { q: "A network layer protocol that allows a host to discover its internet address when it knows only its physical address. It is used when a computer is connected to a network for the first time or when a diskless computer is booted.", a: "RARP (Reverse Address Resolution Protocol)", options: ["IGMP (Internet Group Message Protocol)", "RARP (Reverse Address Resolution Protocol)", "ARP (Address Resolution Protocol)", "ICMP (Internet Control Message Protocol)", "IPv4 (Internet Protocol version 4)"] },
+      { q: "On a typical physical network such as LAN, each device on a link is identified by a physical or station address, usually imprinted on the network interface card (NIC). What network layer protocol is used to find the physical address of the node when its IP address is known?", a: "ARP (Address Resolution Protocol)", options: ["ICMP (Internet Control Message Protocol)", "RARP (Reverse Address Resolution Protocol)", "IGMP (Internet Group Message Protocol)", "IPv4 (Internet Protocol version 4)", "ARP (Address Resolution Protocol)"] },
+      { q: "A network layer protocol that is used to facilitate the simultaneous transmission of a message to a group of recipients. It is a management protocol that helps a multicast router create and update a list of loyal members related to each router interface.", a: "IGMP (Internet Group Message Protocol)", options: ["IPv4 (Internet Protocol version 4)", "ICMP (Internet Control Message Protocol)", "RARP (Reverse Address Resolution Protocol)", "IGMP (Internet Group Message Protocol)", "ARP (Address Resolution Protocol)"] },
+      { q: ": A client/server, static configuration protocol in the application layer designed to provide physical address to logical address mapping.", a: "BOOTP (Bootstrap Protocol)", options: ["DHCP (Dynamic Host Configuration Protocol)", "SNMP (Simple Network Management Protocol", "IGMP (Internet Group Message Protocol)", "BOOTP (Bootstrap Protocol)", "SCTP (Stream Control Transmission Protocol)"] },
+      { q: "A protocol that provides static and dynamic address location that can be manual or automatic.", a: "DHCP (Dynamic Host Configuration Protocol)", options: ["DHCP (Dynamic Host Configuration Protocol)", "IGMP (Internet Group Message Protocol)", "SCTP (Stream Control Transmission Protocol)", "BOOTP (Bootstrap Protocol)", "SNMP (Simple Network Management Protocol"] },
+      { q: "It is a framework for managing devices in an internet using the TCP/IP protocol suite. It provides a set of fundamental operations for monitoring and maintaining an internet.", a: "SNMP (Simple Network Management Protocol)", options: ["SNMP (Simple Network Management Protocol)", "DNS (Domain Name System)", "TELNET (Terminal Network)", "FTP (File Transfer Protocol)", "SMTP (Simple Mail Transfer Protocol)"] },
+      { q: "The Internet Assigned Number Authority (IANA) has divided the port numbers into three ranges: (1) the ports ranging from 0 to 1023 are assigned and controlled by IANA and are called the well-known ports; (2) the ports ranging from 1024 to 49,151 are not assigned or controlled by IANA although they can be registered with IANA to prevent duplication. These are known as registered ports; and (3) the ports ranging from 49,152 to 65, 535 are neither controlled nor registered. They can be used by any process. These are known as the dynamic or ephemeral ports. HTTP uses the services of TCP on well-known", a: "port 80", options: ["port 20", "port 80", "port 53", "port 21"] },
+      { q: "FTP uses two well-known TCP ports: _____ for control connection and _____ for data connection.", a: "port 21, port 20", options: ["port 21, port 20", "port 21, port 80", "port 20, port 53", "port 20, port 21"] },
+      { q: "DNS can use the services of UDP or TCP using the well-known", a: "port 53", options: ["port 53", "port 80", "port 20", "port 21"] },
+      { q: "It is the leading information retrieval service of the Internet (the worldwide computer network). It is a repository of information linked together from points all over the world. It was a project initiated by CERN (European Laboratory for Particle Physics) to create a system to handle distributed resources necessary for scientific research.", a: "WWW (World Wide Web)", options: ["IPv6", "WAN (Wide Area Network)", "WWW (World Wide Web)", "URL (Uniform Resource Locator)"] },
+      { q: "It is a standard for specifying any kind of information on the internet. It defines the protocol, host computer, port and path. It is a unique identifier used to locate a resource on the Internet and commonly referred to also as a web address.", a: "URL (Uniform Resource Locator)", options: ["URL (Uniform Resource Locator)", "IP Address", "MAC Address", "WWW (World Wide Web)"] },
+      { q: "A client/server application that provides name services for other applications. It enables the use of application-layer addresses, such as an email address, instead of network layer logical addresses. It is a protocol that can be used in different platforms.", a: "DNS (Domain Name System)", options: ["TELNET (Terminal Network", "SNMP (Simple Network Management Protocol)", "SMTP (Simple Mail Transfer Protocol)", "FTP (File Transfer Protocol)", "DNS (Domain Name System)"] },
+      { q: "It is a language for creating web pages. It allows the use only of ASCII characters both for the main text and the formatting instructions. In this way, every computer can receive the whole document as an ASCII document. The main text is the data and the formatting instructions can be used by the browser to format the data.", a: "Hypertext Markup Language (HTML)", options: ["Java Server Pages (JSP)", "Hypertext Markup Language (HTML)", "Hypertext Preprocessor (PHP)", "Active Server Pages (ASP)"] },
+      { q: "The following are technologies used for creating dynamic documents (or server-site dynamic documents) using scripts EXCEPT:", a: "Hypertext Markup Language (HTML)", options: ["Hypertext Markup Language (HTML)", "Java Server Pages (JSP) which uses the Java language", "Hypertext Preprocessor (PHP) which uses the Perl language", "Active Server Pages (ASP) which uses Visual Basic"] },
+      { q: "It is a protocol used mainly to access data on the World Wide Web. It functions as a combination of FTP and SMTP.", a: "HTTP (Hypertext Transfer Protocol)", options: ["HTML (Hypertext Markup Language)", "TELNET (Terminal Network)", "DNS (Domain Name System)", "HTTP (Hypertext Transfer Protocol)", "SNMP (Simple Network Management Protocol)"] },
+      { q: "It is the formal application layer protocol that defines the message transfer agent (MTA) client and server in the Internet. It defines how commands and responses must be sent back and forth.", a: "SMTP (Simple Mail Transfer Protocol)", options: ["TELNET (Terminal Network", "FTP (File Transfer Protocol)", "DNS (Domain Name System)", "SMTP (Simple Mail Transfer Protocol)", "SNMP (Simple Network Management Protocol)"] },
+      { q: "It is the standard mechanism provided by TCP/IP for copying a file from one host to another. It differs from other client/server applications in that it establishes two connections between the hosts. One connection is used for data transfer, the other for control information (commands and responses).", a: "FTP (File Transfer Protocol)", options: ["TELNET (Terminal Network)", "DNS (Domain Name System)", "SNMP (Simple Network Management Protocol)", "SMTP (Simple Mail Transfer Protocol)", "FTP (File Transfer Protocol)"] },
+      { q: "It is the standard TCP/IP protocol for virtual terminal service as proposed by the International Organization for Standards (ISO). It is a general-purpose client/server application program that enables the establishment of a connection to a remote system in such a way that the local terminal appears to be a terminal at the remote system. It allows the user to log on to a remote machine, giving the user access to the remote system.", a: "TELNET (Terminal Network)", options: ["SMTP (Simple Mail Transfer Protocol", "TELNET (Terminal Network)", "FTP (File Transfer Protocol)", "SNMP (Simple Network Management Protocol)", "DNS (Domain Name System)"] }
     ],
 
     LAW_RA10844: [
@@ -224,48 +266,679 @@ window.QUIZ_DATA = (function () {
       { q: "RA 9292 repealed which older law?", a: "RA 5734", options: ["RA 10844", "RA 8292", "RA 5734", "RA 7925"] }
     ],
 
-    // EXERCISE_OSI_TCP_IP: kept as an exercises pool but duplicates removed if already present in OSI_DATA_COMMS/IP_ADDRESSING_SUBNET
-    // Only unique exercise questions that were not exact duplicates are kept here.
-    EXERCISE_OSI_TCP_IP: [
-      { q: "How many layers are there in the OSI model?", a: "7", options: ["4", "7", "6", "5"] },
-      { q: "Identify the OSI layer that defines frames.", a: "Data link layer", options: ["Physical layer", "Data link layer", "Network layer", "Transport layer"] },
-      { q: "Identify the OSI layer that performs transmission of bit stream across physical medium.", a: "Physical layer", options: ["Physical layer", "Data link layer", "Network layer", "Transport layer"] },
-      { q: "Identify the OSI layer that performs process-to-process message delivery.", a: "Transport layer", options: ["Application layer", "Physical layer", "Data link layer", "Network layer", "Transport layer"] },
-      { q: "Identify the OSI layer that establishes, manages and terminates sessions.", a: "Session layer", options: ["Transport layer", "Session layer", "Presentation layer", "Application layer"] },
-      { q: "Identify the OSI layer that provides log-in and log-out procedures.", a: "Session layer", options: ["Transport layer", "Session layer", "Presentation layer", "Application layer"] },
-      { q: "Identify the OSI layer that provides independence from different data representation", a: "Presentation layer", options: ["Transport layer", "Session layer", "Presentation layer", "Application layer"] },
-      { q: "Identify the OSI layer that formats and codes conversion services.", a: "Presentation layer", options: ["Transport layer", "Session layer", "Presentation layer", "Application layer"] },
-      { q: "Identify the OSI layer that provides access for the end user.", a: "Application layer", options: ["Network layer", "Data link layer", "Transport layer", "Application layer"] },
-      { q: "Identify the OSI layer that communicates directly with user's application program.", a: "Application layer", options: ["Transport layer", "Session layer", "Presentation layer", "Application layer"] },
-      { q: "A packet in TCP (Transmission Control Protocol) is called", a: "Segment", options: ["Segment", "Bits", "Frames", "Datagrams"] },
-      { q: "The unit of data transfer between two devices using TCP software is called a", a: "Segment", options: ["Frames", "Packet", "Datagram", "Segment"] },
-      { q: "A transportation unit in an SCTP protocol is termed as", a: "Packet", options: ["Datagram", "Frames", "Packet", "Segment"] },
-      { q: "Process-to-process delivery at the transport layer needs two identifiers, IP address and the port number, at each end to make connection. The combination of an IP address and a port number is called a", a: "Socket address", options: ["Port address", "Logical address", "Physical address", "Socket address"] },
-      { q: "Which protocol does not belong to the Transport layer?", a: "FTP", options: ["UDP", "SCTP", "FTP", "TCP"] },
-      { q: "Which protocol does not belong to the Network layer?", a: "SMTP", options: ["RARP", "ARP", "ICMP", "SMTP", "IGMP"] },
-      { q: "Which protocol does not belong to the Application layer?", a: "ARP", options: ["SMTP", "ARP", "DNS", "FTP", "SNMP"] },
-      { q: "A network layer protocol that sends query and error reporting messages. It is a mechanism used by hosts and gateways to send notification of datagram problems back to the sender.", a: "ICMP (Internet Control Message Protocol)", options: ["RARP (Reverse Address Resolution Protocol)", "ARP (Address Resolution Protocol)", "IGMP (Internet Group Message Protocol)", "ICMP (Internet Control Message Protocol)", "IPv4 (Internet Protocol version 4)"] },
-      { q: "A network layer protocol that allows a host to discover its internet address when it knows only its physical address. It is used when a computer is connected to a network for the first time or when a diskless computer is booted.", a: "RARP (Reverse Address Resolution Protocol)", options: ["IGMP (Internet Group Message Protocol)", "RARP (Reverse Address Resolution Protocol)", "ARP (Address Resolution Protocol)", "ICMP (Internet Control Message Protocol)", "IPv4 (Internet Protocol version 4)"] },
-      { q: "On a typical physical network such as LAN, each device on a link is identified by a physical or station address, usually imprinted on the network interface card (NIC). What network layer protocol is used to find the physical address of the node when its IP address is known?", a: "ARP (Address Resolution Protocol)", options: ["ICMP (Internet Control Message Protocol)", "RARP (Reverse Address Resolution Protocol)", "IGMP (Internet Group Message Protocol)", "IPv4 (Internet Protocol version 4)", "ARP (Address Resolution Protocol)"] },
-      { q: "A network layer protocol that is used to facilitate the simultaneous transmission of a message to a group of recipients. It is a management protocol that helps a multicast router create and update a list of loyal members related to each router interface.", a: "IGMP (Internet Group Message Protocol)", options: ["IPv4 (Internet Protocol version 4)", "ICMP (Internet Control Message Protocol)", "RARP (Reverse Address Resolution Protocol)", "IGMP (Internet Group Message Protocol)", "ARP (Address Resolution Protocol)"] },
-      { q: ": A client/server, static configuration protocol in the application layer designed to provide physical address to logical address mapping.", a: "BOOTP (Bootstrap Protocol)", options: ["DHCP (Dynamic Host Configuration Protocol)", "SNMP (Simple Network Management Protocol", "IGMP (Internet Group Message Protocol)", "BOOTP (Bootstrap Protocol)", "SCTP (Stream Control Transmission Protocol)"] },
-      { q: "A protocol that provides static and dynamic address location that can be manual or automatic.", a: "DHCP (Dynamic Host Configuration Protocol)", options: ["DHCP (Dynamic Host Configuration Protocol)", "IGMP (Internet Group Message Protocol)", "SCTP (Stream Control Transmission Protocol)", "BOOTP (Bootstrap Protocol)", "SNMP (Simple Network Management Protocol"] },
-      { q: "It is a framework for managing devices in an internet using the TCP/IP protocol suite. It provides a set of fundamental operations for monitoring and maintaining an internet.", a: "SNMP (Simple Network Management Protocol)", options: ["SNMP (Simple Network Management Protocol)", "DNS (Domain Name System)", "TELNET (Terminal Network)", "FTP (File Transfer Protocol)", "SMTP (Simple Mail Transfer Protocol)"] },
-      { q: "The Internet Assigned Number Authority (IANA) has divided the port numbers into three ranges: (1) the ports ranging from 0 to 1023 are assigned and controlled by IANA and are called the well-known ports; (2) the ports ranging from 1024 to 49,151 are not assigned or controlled by IANA although they can be registered with IANA to prevent duplication. These are known as registered ports; and (3) the ports ranging from 49,152 to 65, 535 are neither controlled nor registered. They can be used by any process. These are known as the dynamic or ephemeral ports. HTTP uses the services of TCP on well-known", a: "port 80", options: ["port 20", "port 80", "port 53", "port 21"] },
-      { q: "FTP uses two well-known TCP ports: _____ for control connection and _____ for data connection.", a: "port 21, port 20", options: ["port 21, port 20", "port 21, port 80", "port 20, port 53", "port 20, port 21"] },
-      { q: "DNS can use the services of UDP or TCP using the well-known", a: "port 53", options: ["port 53", "port 80", "port 20", "port 21"] },
-      { q: "It is the leading information retrieval service of the Internet (the worldwide computer network). It is a repository of information linked together from points all over the world. It was a project initiated by CERN (European Laboratory for Particle Physics) to create a system to handle distributed resources necessary for scientific research.", a: "WWW (World Wide Web)", options: ["IPv6", "WAN (Wide Area Network)", "WWW (World Wide Web)", "URL (Uniform Resource Locator)"] },
-      { q: "It is a standard for specifying any kind of information on the internet. It defines the protocol, host computer, port and path. It is a unique identifier used to locate a resource on the Internet and commonly referred to also as a web address.", a: "URL (Uniform Resource Locator)", options: ["URL (Uniform Resource Locator)", "IP Address", "MAC Address", "WWW (World Wide Web)"] },
-      { q: "A client/server application that provides name services for other applications. It enables the use of application-layer addresses, such as an email address, instead of network layer logical addresses. It is a protocol that can be used in different platforms.", a: "DNS (Domain Name System)", options: ["TELNET (Terminal Network", "SNMP (Simple Network Management Protocol)", "SMTP (Simple Mail Transfer Protocol)", "FTP (File Transfer Protocol)", "DNS (Domain Name System)"] },
-      { q: "It is a language for creating web pages. It allows the use only of ASCII characters both for the main text and the formatting instructions. In this way, every computer can receive the whole document as an ASCII document. The main text is the data and the formatting instructions can be used by the browser to format the data.", a: "Hypertext Markup Language (HTML)", options: ["Java Server Pages (JSP)", "Hypertext Markup Language (HTML)", "Hypertext Preprocessor (PHP)", "Active Server Pages (ASP)"] },
-      { q: "The following are technologies used for creating dynamic documents (or server-site dynamic documents) using scripts EXCEPT:", a: "Hypertext Markup Language (HTML)", options: ["Hypertext Markup Language (HTML)", "Java Server Pages (JSP) which uses the Java language", "Hypertext Preprocessor (PHP) which uses the Perl language", "Active Server Pages (ASP) which uses Visual Basic"] },
-      { q: "It is a protocol used mainly to access data on the World Wide Web. It functions as a combination of FTP and SMTP.", a: "HTTP (Hypertext Transfer Protocol)", options: ["HTML (Hypertext Markup Language)", "TELNET (Terminal Network)", "DNS (Domain Name System)", "HTTP (Hypertext Transfer Protocol)", "SNMP (Simple Network Management Protocol)"] },
-      { q: "It is the formal application layer protocol that defines the message transfer agent (MTA) client and server in the Internet. It defines how commands and responses must be sent back and forth.", a: "SMTP (Simple Mail Transfer Protocol)", options: ["TELNET (Terminal Network", "FTP (File Transfer Protocol)", "DNS (Domain Name System)", "SMTP (Simple Mail Transfer Protocol)", "SNMP (Simple Network Management Protocol)"] },
-      { q: "It is the standard mechanism provided by TCP/IP for copying a file from one host to another. It differs from other client/server applications in that it establishes two connections between the hosts. One connection is used for data transfer, the other for control information (commands and responses).", a: "FTP (File Transfer Protocol)", options: ["TELNET (Terminal Network)", "DNS (Domain Name System)", "SNMP (Simple Network Management Protocol)", "SMTP (Simple Mail Transfer Protocol)", "FTP (File Transfer Protocol)"] },
-      { q: "It is the standard TCP/IP protocol for virtual terminal service as proposed by the International Organization for Standards (ISO). It is a general-purpose client/server application program that enables the establishment of a connection to a remote system in such a way that the local terminal appears to be a terminal at the remote system. It allows the user to log on to a remote machine, giving the user access to the remote system.", a: "TELNET (Terminal Network)", options: ["SMTP (Simple Mail Transfer Protocol", "TELNET (Terminal Network)", "FTP (File Transfer Protocol)", "SNMP (Simple Network Management Protocol)", "DNS (Domain Name System)"] }
-    ]
+    RF_ANTENNAS_WAVES: [
+      {
+        q: "100 µV is equivalent to",
+        a: "-40 dBμV",
+        options: ["-40 dBμV", "-20 dBμV", "-20 dBmV", "-40 dBmV"]
+      },
+      {
+        q: "0 dBmW is equivalent to",
+        a: "1 mW",
+        options: ["10 mW", "0 Watt", "100 mW", "1 mW"]
+      },
+      {
+        q: "30 dBW is equivalent to",
+        a: "1000 W",
+        options: ["100 W", "1000 W", "1000", "30 W"]
+      },
+      {
+        q: "In dBuV, 1 milliVolt is equivalent to",
+        a: "60",
+        options: ["60", "-60", "30", "-30"]
+      },
+      {
+        q: "1 nanoWatt of power is equivalent to",
+        a: "-90 dBW",
+        options: ["-180 dBW", "-90 dBW", "90 dBW", "-90 dBmW"]
+      },
+      {
+        q: "Three cascaded amplifiers have power gains of 5 dB, 10 dB and 15 dB. If the input power is 100 mW, what is the output power?",
+        a: "100 watts",
+        options: ["10 watts", "100 watts", "100 kW", "100 mW"]
+      },
+      {
+        q: "A circuit consists of two amplifiers with gains of 5 dB and 10 dB and two filters with attenuations -8 dB and-12 dB. If the output voltage is 1 volt, what is the input voltage?",
+        a: "1.78 volt",
+        options: ["1 volt", "1.78 volt", "0.56 mV", "0.56 volts"]
+      },
+      {
+        q: "A shorted half-wave line and an open quarter-wave circuit at the operating frequency act like a(n)",
+        a: "Series resonant circuit",
+        options: ["Capacitor", "Inductor", "Series resonant circuit", "Parallel resonant circuit"]
+      },
+      {
+        q: "A shorted quarter-wave and an open half-wave line at the operating frequency act like a(n)",
+        a: "Parallel resonant circuit",
+        options: ["Parallel resonant circuit", "Series resonant circuit", "Capacitor", "Inductor"]
+      },
+      {
+        q: "The standing wave pattern of a given transmission line is such that half a wavelength away from the load the voltage is zero while the current is maximum. The line is terminated in",
+        a: "a short circuit",
+        options: ["a mismatched impedance", "a matched impedance", "a short circuit", "an open circuit"]
+      },
+      {
+        q: "The standing wave pattern of a given transmission line is such that half a wavelength away from the load the voltage is maximum while the current is minimum. The line is terminated in",
+        a: "an open circuit",
+        options: ["an open circuit", "a mismatched impedance", "a short circuit", "a matched impedance"]
+      },
+      {
+        q: "The standing wave pattern of a given transmission line is such that there is no point on the transmission line where the voltage or current remains zero over the whole cycle. The line is most likely terminated in",
+        a: "a mismatched impedance",
+        options: ["an open circuit", "a mismatched impedance", "a short circuit", "a matched impedance"]
+      },
+      {
+        q: "A pattern of voltage and current variations along a transmission line not terminated in its characteristic impedance is called",
+        a: "Standing waves",
+        options: ["A magnetic field", "Radio waves", "Standing waves", "An electric field"]
+      },
+      {
+        q: "A ratio expressing the percentage of incident voltage reflected on a transmission line is known as the",
+        a: "Reflection coefficient",
+        options: ["Velocity factor", "Line efficiency", "Standing-wave ratio", "Reflection coefficient"]
+      },
+      {
+        q: "The reflection coefficient is -1. This means that the transmission line is terminated in a load that is",
+        a: "short-circuited",
+        options: ["matched", "open-circuited", "short-circuited", "mismatched"]
+      },
+      {
+        q: "The reflection coefficient is -1. This means that",
+        a: "the reflected voltage is equal in magnitude but out of phase with the incident voltage",
+        options: ["the reflected voltage is equal in magnitude but out of phase with the incident voltage", "the reflected voltage is out of phase with the incident voltage", "the reflected voltage is equal in magnitude and in phase with the incident voltage", "the reflected voltage is equal in magnitude with the incident voltage"]
+      },
+      {
+        q: "The SWR is 1. This means that the transmission line is terminated in a load that is",
+        a: "matched",
+        options: ["matched", "open-circuited", "mismatched", "short-circuited"]
+      },
+      {
+        q: "The reflection coefficient is 1. This means that",
+        a: "the reflected voltage is equal in magnitude and in phase with the incident voltage",
+        options: ["the reflected voltage is out of phase with the incident voltage", "the reflected voltage is equal in magnitude and in phase with the incident voltage", "the reflected voltage is equal in magnitude but out of phase with the incident voltage", "the reflected voltage is equal in magnitude with the incident voltage"]
+      },
+      {
+        q: "The reflection coefficient is 0. This means that the transmission line is terminated in a load that is",
+        a: "matched",
+        options: ["short-circuited", "mismatched", "open-circuited", "matched"]
+      },
+      {
+        q: "The most desirable reflection coefficient is",
+        a: "0",
+        options: ["infinity", "-1", "1", "0"]
+      },
+      {
+        q: "The desirable SWR on a transmission line is",
+        a: "1",
+        options: ["100", "1", "-1", "infinity"]
+      },
+      {
+        q: "Indicate the false statement. The SWR on a transmission line is infinity; the line is terminated in",
+        a: "a complex impedance",
+        options: ["a short circuit", "a pure reactance", "an open circuit", "a complex impedance"]
+      },
+      {
+        q: "One of the most critical aspects of any antenna system is to ensure maximum power transfer from the transmitter to the antenna. An important part of this is the transmission line. What value of SWR will allow maximum power transfer to take place?",
+        a: "1:1",
+        options: ["3:1", "1:1", "2:1", "00"]
+      },
+      {
+        q: "A 50 ohm coax is connected to a 73-ohm antenna. The SWR is",
+        a: "1.46",
+        options: ["2.92", "1.46", "0.685", "1"]
+      },
+      {
+        q: "The minimum voltage along a transmission line is 260 V, while the maximum is 390 V. The SWR is",
+        a: "1.5",
+        options: ["0.67", "1.2", "1.5", "1.0"]
+      },
+      {
+        q: "The minimum current along a transmission line is 150 A, while the maximum is 300 A. The SWR is",
+        a: "2.0",
+        options: ["2.0", "1.5", "0.5", "1.0"]
+      },
+      {
+        q: "The characteristic impedance of a transmission line does not depend upon its",
+        a: "Length",
+        options: ["None of the choices", "Conductor spacing", "Conductor diameter", "Length"]
+      },
+      {
+        q: "For maximum absorption of power at the antenna, the relationship between the characteristic impedance of the line Zo and the load impedance Z_L should be",
+        a: "Zo = Z_L",
+        options: ["Zo < Z_L", "Zo = Z_L", "Zo > Z_L", "Zo = 0"]
+      },
+      {
+        q: "A parasitic element that is spaced by some distance between approximately one-tenth and two-tenths of a wavelength from the driven element.",
+        a: "Director",
+        options: ["Driven element", "Boom", "Director", "Reflector"]
+      },
+      {
+        q: "A parasitic element that is approximately 5 percent shorter than the half-wave dipole driven element and is mounted in front of the driven element.",
+        a: "Director",
+        options: ["Reflector", "Driven element", "Director", "Boom"]
+      },
+      {
+        q: "A parasitic element that is typically about 5 percent longer than the half-wave dipole-driven element is",
+        a: "Reflector",
+        options: ["Boom", "Director", "Driven element", "Reflector"]
+      },
+      {
+        q: "A parasitic element that is spaced from the driven element by a distance of about 0.15 to 0.25λ is a",
+        a: "Reflector",
+        options: ["Driven element", "Director", "Boom", "Reflector"]
+      },
+      {
+        q: "An antenna that transmits or receives equally well in all directions is said to be",
+        a: "Omnidirectional",
+        options: ["Quasidirectional", "Omnidirectional", "Unidirectional", "Bidirectional"]
+      },
+      {
+        q: "Which antenna has a unidirectional radiation pattern and gain?",
+        a: "Yagi",
+        options: ["Dipole", "Collinear", "Yagi", "Ground plane"]
+      },
+      {
+        q: "The horizontal radiation pattern of a dipole is a",
+        a: "Figure eight",
+        options: ["Narrow beam", "Circle", "Figure eight", "Clover leaf"]
+      },
+      {
+        q: "The horizontal radius pattern of a vertical dipole is a",
+        a: "Circle",
+        options: ["Circle", "Clover leaf", "Narrow beam", "Figure eight"]
+      },
+      {
+        q: "A directional antenna with two or more elements is known as a(n)",
+        a: "Array",
+        options: ["End-fire", "Collinear", "Ground plane", "Array"]
+      },
+      {
+        q: "A popular half-wavelength antenna is the",
+        a: "Folded dipole",
+        options: ["Folded dipole", "Loop", "Dipole", "Ground plane"]
+      },
+      {
+        q: "A type of filter or circulator that allows a single antenna to be shared by a transmitter and receiver.",
+        a: "Diplexer",
+        options: ["Balun", "Antenna tuner", "Diplexer", "Q-section or matching stub"]
+      },
+      {
+        q: "The characteristics and performance of an antenna are the same whether the antenna is radiating or intercepting an electromagnetic signal. This is known as",
+        a: "Antenna reciprocity",
+        options: ["Antenna reciprocity", "Radiation resistance", "Directivity", "Polarization"]
+      },
+      {
+        q: "It refers to the orientation of magnetic and electric fields with respect to the earth.",
+        a: "Polarization",
+        options: ["Beam width", "Directivity", "Radiation resistance", "Polarization"]
+      },
+      {
+        q: "The measure of an antenna's directivity.",
+        a: "Directivity",
+        options: ["Polarization", "Beamwidth", "Directivity", "Radiation resistance"]
+      },
+      {
+        q: "What is the beam width of an antenna that has a gain of 30 dB?",
+        a: "6.42 degrees",
+        options: ["6.42 degrees", "30 degrees", "3 degrees", "31.6 degrees"]
+      },
+      {
+        q: "What is the gain of an antenna that has a beam width of 36 degrees?",
+        a: "15 dB",
+        options: ["15 dB", "36 dB", "10 dB", "1.5 dB"]
+      },
+      {
+        q: "A transmitting antenna has a gain of 10 dB over a dipole. How much is the equivalent gain with respect to an isotopic radiator?",
+        a: "12.15 dBi",
+        options: ["7.85 dBd", "12.15 dBi", "12.15 dBd", "7.85 dBi"]
+      },
+      {
+        q: "A transmitting isotropic antenna has a gain of 6 dB. How much is the equivalent gain over a dipole?",
+        a: "3.85 dBd",
+        options: ["3.85 dBi", "8.15 dBd", "3.85 dBd", "8.15 dBi"]
+      },
+      {
+        q: "The effective radiated power of an antenna that has a gain of 6 dBi and transmitter power of 1 kW is",
+        a: "36 dBW",
+        options: ["36 dBm", "16 000 watts", "36 dBW", "36 dBi"]
+      },
+      {
+        q: "The region directly around the antenna where the electric and magnetic fields are distinct.",
+        a: "Near field",
+        options: ["Far field", "Fraunhofer zone", "Near field", "Electromagnetic field"]
+      },
+      {
+        q: "The radio wave beyond about one wavelength from the antenna.",
+        a: "Far field",
+        options: ["Fresnel zone", "Electromagnetic field", "Far field", "Near field"]
+      },
+      {
+        q: "The near field is also referred to as",
+        a: "Fresnel zone",
+        options: ["Fresnel zone", "Fraunhofer zone", "Magnetic field", "Electric field"]
+      },
+      {
+        q: "The far field is also referred to as",
+        a: "Fraunhofer zone",
+        options: ["Fraunhofer zone", "Electric field", "Magnetic field", "Fresnel zone"]
+      },
+      {
+        q: "Most wireless applications use the far field wave. And any antenna radiation patterns are valid only if measurements are taken on the far field. The near field is rarely used, but these applications make use of the near field..",
+        a: "RFID and NFC",
+        options: ["Zigbee", "Wifi", "RFID and NFC", "Bluetooth"]
+      },
+      {
+        q: "For a frequency of 593 MHz, which distance from the antenna is in the far field region?",
+        a: "20 ft",
+        options: ["10 ft", "1.66 ft", "15 ft", "20 ft"]
+      },
+      {
+        q: "At a frequency of 2.4 GHz, which distance from the antenna is in the near field region?",
+        a: "1 m",
+        options: ["5 m", "1 m", "2 m", "3 m"]
+      },
+      {
+        q: "The ratio of the electric field strength of a radiated wave to the magnetic field strength is a constant referred to as the wave impedance, and is",
+        a: "377 Ω",
+        options: ["36.5 Ω", "377 Ω", "93 Ω", "73 Ω"]
+      },
+      {
+        q: "For most media in which EM waves can propagate the value of permeability is the same as for free space and this is equal to",
+        a: "4π×10^-7 H/m",
+        options: ["4π×10^-7 H/m", "4π×10^-7 F/m", "3.854×10^-12 H/m", "8.854×10^-12 F/m"]
+      },
+      {
+        q: "For most media in which EM waves can propagate the value of permittivity is the same as for free space and this is equal to",
+        a: "8.854×10^-12 F/m",
+        options: ["8.854×10^-12 F/m", "4π×10^-7 F/m", "4π×10^-7 H/m", "8.854×10^-12 H/m"]
+      },
+      {
+        q: "Three feet is one wavelength at a frequency of",
+        a: "328 MHz",
+        options: ["100 MHz", "164 MHz", "328 MHz", "300 MHz"]
+      },
+      {
+        q: "The length of a doublet at 27-MHz is",
+        a: "18.2 ft",
+        options: ["34.67 ft", "8.67 ft", "18.2 ft", "17.3 ft"]
+      },
+      {
+        q: "An EM wave that propagates directly from the transmitting to the receiving antenna",
+        a: "Space wave",
+        options: ["Space wave", "Sky wave", "Surface wave", "Ground wave"]
+      },
+      {
+        q: "A vertically polarized EM wave that propagates along the surface of the earth.",
+        a: "Ground wave",
+        options: ["Sky wave", "Direct wave", "Space wave", "Ground wave"]
+      },
+      {
+        q: "An EM wave that is returned to earth by the ionosphere",
+        a: "Sky wave",
+        options: ["Space wave", "Ground wave", "Surface wave", "Sky wave"]
+      },
+      {
+        q: "The ionosphere causes radio signals to be",
+        a: "Refracted",
+        options: ["Absorbed", "Refracted", "Reflected", "Diffused"]
+      },
+      {
+        q: "The shortest distance from a transmitter, measured along the surface of the earth, at which a sky wave of fixed frequency will be returned to earth.",
+        a: "Skip distance",
+        options: ["Skip distance", "Carrier frequency", "Maximum usable frequency", "Critical frequency"]
+      },
+      {
+        q: "The highest frequency that can be used for sky wave communication between two given points on earth.",
+        a: "Maximum usable frequency",
+        options: ["Maximum usable frequency", "Space wave", "Skip distance", "Critical frequency"]
+      },
+      {
+        q: "The highest frequency that will be returned down to earth by the ionosphere after having beamed straight up at it.",
+        a: "critical frequency",
+        options: ["maximum usable frequency", "carrier frequency", "resonant frequency", "critical frequency"]
+      },
+      {
+        q: "The type of radio wave responsible for long distance communications by multiple skips is the",
+        a: "Sky wave",
+        options: ["Direct wave", "Sky wave", "Ground wave", "Surface wave"]
+      },
+      {
+        q: "Line-of-sight communications is NOT a factor in which frequency range?",
+        a: "HF",
+        options: ["Microwave", "HF", "VHF", "UHF"]
+      },
+      {
+        q: "The ionosphere has its greatest effects on signals in what frequency range?",
+        a: "3 to 30 MHz",
+        options: ["30 to 300 MHz", "3 to 30 MHz", "300 KHz to 3 MHz", "Above 300 MHz"]
+      },
+      {
+        q: "Which layers in the ionosphere primarily exist only during daylight hours?",
+        a: "D and E layers",
+        options: ["D and F layers", "E and F layers", "D and E layers", "F1 and F2 layers"]
+      },
+      {
+        q: "Find the characteristic impedance of glass with a relative permittivity of 7.8.",
+        a: "A. 135 Ω",
+        options: ["A. 135 Ω", "B. 377 Ω", "C. 1052 Ω", "D. 93 Ω"]
+      },
+      {
+        q: "Find the propagation velocity of radio waves in glass with a relative permittivity of 7.8.",
+        a: "B. 107.4×10^6 m/s",
+        options: ["A. 3×10^8 m/s", "B. 107.4×10^6 m/s", "C. 10.74×10^6 m/s", "D. 107.4×10^8 m/s"]
+      },
+      {
+        q: "A boat is equipped with a VHF marine radio, which it uses to communicate with other nearby boats and shore stations. If the antenna on the boat is 2.3 m above the water, calculate the maximum distance for communication with another boat, but using the shore station as a repeater.",
+        a: "D. D(km)=51.18 km",
+        options: ["A. D(km)=12.50 mi", "B. D(km)=25.59 km", "C. D(km)=12.50 km", "D. D(km)=51.18 km"]
+      },
+      {
+        q: "A boat is equipped with a VHF marine radio, which it uses to communicate with other nearby boats and shore stations. If the antenna on the boat is 2.3 m above the water, calculate the maximum distance for communication with a shore station with an antenna on a tower 22 m above the water level",
+        a: "B. D(km)=25.59 km",
+        options: ["A. D(km)=12.50 mi", "B. D(km)=25.59 km", "C. D(km)=12.50 km", "D. D(km)=51.18 km"]
+      },
+      {
+        q: "A paging system has a transmitting antenna located 50 m above average terrain. How far away could the signal be received by a pager carried 1.2 m above the ground?",
+        a: "A. D(km)=33.67 km",
+        options: ["A. D(km)=33.67 km", "B. D(km)=58.31 km", "C. D(km)=9.03 km", "D. D(km)=33.67 mi"]
+      },
+      {
+        q: "An FM broadcast station has a transmitting antenna located 50 m above average terrain. How far away could the signal be received by a car radio with an antenna 1.5 m above the ground?",
+        a: "B. D=34.20 km",
+        options: ["A. D=10.10 km", "B. D=34.20 km", "C. D=34.20 mi", "D. D=58.31 km"]
+      },
+      {
+        q: "An FM broadcast station has a transmitting antenna located 50 m above average terrain. How far away could the signal be received by rooftop antenna 12 m above the ground?",
+        a: "C. D=43.43 km",
+        options: ["A. D=14.28 km", "B. D=28.56 km", "C. D=43.43 km", "D. D=58.31 km"]
+      },
+      {
+        q: "A transmitter has an output power of 50 W. It is connected to its antenna by a feedline that is 25 meters long and properly matched. The loss in the feedline is 5 dB/100 m. The antenna has a gain of 8.5 dBi. What is the EIRP in the direction of maximum antenna gain?",
+        a: "A. EIRP=24.25 dBW",
+        options: ["A. EIRP=24.25 dBW", "B. EIRP=15.75 dBW", "C. EIRP=24.25 dBmW", "D. EIRP=24.25 dB"]
+      },
+      {
+        q: "A transmitter has an output power of 50 W. It is connected to its antenna by a feedline that is 25 meters long and properly matched. The loss in the feedline is 5 dB/100 m. The antenna has a gain of 8.5 dBi. What is the electric field strength at the same place as in (c)?",
+        a: "B. E=89.4 mV/m",
+        options: ["A. E=89.4 mW/m", "B. E=89.4 mV/m", "C. E=89.4 μV/m", "D. E=89.4 mV/m^2"]
+      },
+      {
+        q: "A transmitter has an output power of 50 W. It is connected to its antenna by a feedline that is 25 meters long and properly matched. The loss in the feedline is 5 dB/100 m. The antenna has a gain of 8.5 dBi. What is the power density 1 km from the antenna in the direction of maximum gain, assuming free space propagation?",
+        a: "D. P_D=21.2 μW/m^2",
+        options: ["A. P_D=2.12 μW/m^2", "B. P_D=21.2 mW/m^2", "C. P_D=21.2 nW/m^2", "D. P_D=21.2 μW/m^2"]
+      },
+      {
+        q: "An isotropic source radiates 100 W of power in free space. At a distance of 15 km from the source, calculate the power density.",
+        a: "B. 35.4 nW/m^2",
+        options: ["A. 3.54 nW/m^2", "B. 35.4 nW/m^2", "C. 354 nW/m^2", "D. 35.4 mV/m^2"]
+      },
+      {
+        q: "An isotropic source radiates 100 W of power in free space. At a distance of 15 km from the source, calculate the electric field intensity.",
+        a: "D. 3.65 mW/m",
+        options: ["A. 36.5 mV/m", "B. 365 mV/m", "C. .65 mV/m", "D. 3.65 mW/m"]
+      }
+    ],
+
+
+    
+  POWER_AND_VOLTAGE_CONVERSIONS: [
+    {
+      q: "100 mW of power is equivalent to",
+      a: "-10 dBW",
+      options: ["-10 dBW", "10 dBm", "0 dBm", "20 dBW"]
+    },
+    {
+      q: "0 dBmW is equivalent to",
+      a: "1 mW",
+      options: ["0 Watt", "100 mW", "1 mW", "10 mW"]
+    },
+    {
+      q: "In dBuV, I milliVolt is equivalent to",
+      a: "60",
+      options: ["60", "-30", "30", "-60"]
+    },
+    {
+      q: "If 20 dB is a voltage gain, then this is equivalent to a linear gain of",
+      a: "10",
+      options: ["10", "01", "100", "1000"]
+    },
+    {
+      q: "100 µV is equivalent to",
+      a: "-20 dBmV",
+      options: ["-20 dBμV", "-20 dBmV", "-40 dBμV", "-40 dBmV"]
+    },
+    {
+      q: "120 dBuV is equivalent to",
+      a: "1 volt",
+      options: ["1 volt", "10 Volts", "10 mV", "1 mV"]
+    },
+    {
+      q: "5 volts is equivalent to",
+      a: "73.98 dBmV",
+      options: ["73.98 dBμV", "73.98 dBmV", "-33.98 dBμV", "133.98 dBmV"]
+    }
+  ],
+  AMPLIFIERS_FILTERS_AND_CIRCUITS: [
+    {
+      q: "Three cascaded amplifiers have power gains of 5 dB, 10 dB and 15 dB. If the input power is 30 dBmW (or dBm), what is the output power?",
+      a: "60 dBm",
+      options: ["60 dBm", "1000 mW", "60 dBW", "100 W"]
+    },
+    {
+      q: "A circuit consists of two amplifiers with gains of 6 dB and 9 dB and one filter with attenuation of -20 dB. If the output voltage is 0 dBV, what is the input voltage?",
+      a: "5.0 dBV",
+      options: ["1.78 dBV", "5.0 dBV", "-5.04 dBV", "0.56 V"]
+    },
+    {
+      q: "For the system shown, given an overall gain is 20 dB, compute V_2??? V_in=??? V_out=7V A_1 V_1 V_2=?? A_2 V_3 A_3 A_4 A_1=0.25 A_2=??? A_3=0.5 A_4=15",
+      a: "V_2=0.93 V",
+      options: ["V_2=0.175 V", "V_2=0.47 V", "V_2=0.7 V", "V_2=0.93 V"]
+    },
+    {
+      q: "A circuit consists of two amplifiers with gains of 5 dB and 15 dB and two filters with attenuations of -10 dB and -4 dB. If the output power is 20 dBm, what is the input power?",
+      a: "0.025 W",
+      options: ["2.5 W", "25 W", "0.25 W", "0.025 W"]
+    },
+    {
+      q: "A filter block has an attenuation factor of 0.25. What amplifier gain in dB is needed to ensure an output power of 1 watt for an input power of 0 dBm?",
+      a: "36 dB",
+      options: ["36 dB", "30 dBm", "30 dB", "36 dBm"]
+    }
+  ],
+  MODULATION_THEORY: [
+    {
+      q: "Which of the following is not true about AM?",
+      a: "The carrier frequency changes",
+      options: ["The information signal amplitude changes the carrier amplitude", "The carrier frequency changes", "The carrier frequency remains constant", "The carrier amplitude varies"]
+    },
+    {
+      q: "Both FM and PM are types of what kind of modulation?",
+      a: "Angle",
+      options: ["Phase", "Linear", "Duty cycle", "Angle"]
+    },
+    {
+      q: "The process of translating a signal, with or without modulation, to a higher or lower frequency for processing is called",
+      a: "Frequency conversion",
+      options: ["Frequency shift", "Frequency conversion", "Frequency division", "Frequency multiplication"]
+    },
+    {
+      q: "The outline of the peaks of a carrier has the shape of the modulating signal and is called the",
+      a: "Envelope",
+      options: ["Envelope", "Trace", "Carrier variation", "Waveshape"]
+    },
+    {
+      q: "A carrier of 880 kHz is modulated by a 3.5 kHz sine wave. The LSB and USB are, respectively",
+      a: "876.5 and 883.5 kHz",
+      options: ["876.5 and 883.5 kHz", "873 and 887 kHz", "883.5 and 876.5 kHz", "887 and 873 kHz"]
+    },
+    {
+      q: "If the modulation index m is greater than 1 in AM, what happens?",
+      a: "Information signal is distorted",
+      options: ["Carrier drops to zero", "Carrier frequency shifts", "Information signal is distorted", "Normal operation"]
+    },
+    {
+      q: "The process of separating the original information or signal from the modulated carrier",
+      a: "Demodulation",
+      options: ["Demodulation", "Mixing", "Heterodyning", "Conversion"]
+    },
+    {
+      q: "The new signals produced by modulation are called",
+      a: "Sidebands",
+      options: ["Spurious emissions", "Intermodulation products", "Sidebands", "Harmonics"]
+    },
+    {
+      q: "A carrier is simultaneously modulated by two sine waves with modulation indices of 0.3 and 0.4; the total modulation index",
+      a: "Is 0.5",
+      options: ["Cannot be calculated", "Is 0.7", "Is 0.5", "Is 1"]
+    },
+    {
+      q: "Having an information signal change some characteristic of a carrier signal is called",
+      a: "Modulation",
+      options: ["Linear mixing", "Modulation", "Multiplexing", "Duplexing"]
+    },
+    {
+      q: "An AM signal with a maximum modulating signal frequency of 4.5 kHz has a total bandwidth of",
+      a: "9 kHz",
+      options: ["18 kHz", "9 kHz", "6.75 kHz", "4.5 kHz"]
+    },
+    {
+      q: "The typical audio modulating frequency range used in radio and telephone communications is",
+      a: "300 Hz to 3 kHz",
+      options: ["100 Hz to 10 kHz", "50 Hz to 5 kHz", "300 Hz to 3 kHz", "50 Hz to 15 kHz"]
+    },
+    {
+      q: "An input signal of 1.8 MHz is mixed with a local oscillator of 5 MHz. A filter selects the difference signal. The output is",
+      a: "3.2 MHz",
+      options: ["1.8 MHz", "6.8 MHz", "3.2 MHz", "5 MHz"]
+    },
+    {
+      q: "In an AM signal, the transmitted information is contained within the",
+      a: "Sidebands",
+      options: ["Sidebands", "Envelope", "Carrier", "Modulating signal"]
+    },
+    {
+      q: "The output of an SSB transmitter with a 3.85 MHz carrier and a 1.5 kHz sine wave modulating tone is",
+      a: "A 3.8485 MHz sine wave",
+      options: ["3848.5 and 3851.5 MHz sine wave", "A 3.8485 MHz sine wave", "3.85, 3.8485, and 3.8515 MHz sine wave", "A 3.85 MHz sine wave"]
+    },
+    {
+      q: "An AM transmitter antenna current is measured with no modulation and found to be 2.6 amperes. With modulation, the current rises to 2.9 amperes. The percent modulation is",
+      a: "70 percent",
+      options: ["35 percent", "89 percent", "70 percent", "42 percent"]
+    },
+    {
+      q: "An AM signal has a carrier power of 5W. The percentage of modulation is 80 percent. The total sideband power is",
+      a: "1.6 W",
+      options: ["1.6 W", "4.0 W", "0.8 W", "2.5 W"]
+    },
+    {
+      q: "A 200 kHz carrier is modulated by a 2.5 kHz signal. The fourth pair of sidebands are spaced from the carrier by",
+      a: "10 kHz",
+      options: ["15 kHz", "2.5 kHz", "10 kHz", "5 kHz"]
+    },
+    {
+      q: "The ratio of the peak modulating signal voltage to the peak carrier voltage is referred to as",
+      a: "Modulation index",
+      options: ["Mix factor", "Voltage ratio", "Decibels", "Modulation index"]
+    },
+    {
+      q: "The values of Vmax and Vmin as read from an AM wave on an oscilloscope are 2.8 and 0.3. The percentage of modulation is",
+      a: "80.6 percent",
+      options: ["93.3 percent", "41.4 percent", "80.6 percent", "10.7 percent"]
+    },
+    {
+      q: "A display of signal amplitude versus frequency is called the",
+      a: "Frequency spectrum",
+      options: ["Frequency spectrum", "Frequency domain", "Amplitude spectrum", "Time domain"]
+    },
+    {
+      q: "A device for locking onto and tracking the frequency of an incoming signal",
+      a: "Phase lock loop",
+      options: ["Low pass filter", "Phase lock loop", "Voltage-controlled oscillator", "Mixer"]
+    },
+    {
+      q: "Noise is primarily",
+      a: "Random level shifts",
+      options: ["Random level shifts", "Low-frequency variations", "Random frequency variations", "High-frequency spikes"]
+    },
+    {
+      q: "Most of the power in an AM signal is in the",
+      a: "Carrier",
+      options: ["Carrier", "Lower sideband", "Modulating signal", "Upper sideband"]
+    },
+    {
+      q: "An AM signal without the carrier is called a(n)",
+      a: "DSB",
+      options: ["SSB", "FM signal", "DSB", "Vestige sideband"]
+    },
+    {
+      q: "The amount of frequency deviation from the carrier center frequency in an FM transmitter is proportional to what characteristic of the modulating signal?",
+      a: "Amplitude",
+      options: ["Shape", "Phase", "Frequency", "Amplitude"]
+    },
+    {
+      q: "An AM transmitter has a percentage of modulation of 88. The carrier power is 440 W. The power in one sideband is",
+      a: "85 W",
+      options: ["170 W", "110 W", "610 W", "85 W"]
+    },
+    {
+      q: "The main advantage of SSB over standard AM or DSB is",
+      a: "Less spectrum space is used",
+      options: ["Less spectrum space is used", "Less power is consumed", "Simple equipment is used", "A higher modulation percentage"]
+    },
+    {
+      q: "For 100 percent modulation, what percentage of power is in each sideband?",
+      a: "16.65 percent",
+      options: ["16.65 percent", "100 percent", "33.3 percent", "50 percent"]
+    },
+    {
+      q: "What is the minimum AM signal needed to transmit information?",
+      a: "One sideband",
+      options: ["Carrier only", "One sideband", "Carrier plus sidebands", "Both sidebands"]
+    }
+  ],
+  SIGNAL_SPECTRA_IDENTIFICATION: [
+    {
+      q: "The output spectrum consists of the upper and lower sidebands.",
+      a: "the statement applies only to DSB signal.",
+      options: ["the statement applies only to conventional AM", "the statement applies to Conv AM, DSB and SSB", "the statement applies only to an SSB signal", "the statement applies only to DSB signal.", "the statement applies only to Conv AM and DSB"]
+    },
+    {
+      q: "The output spectrum consists of the difference between the carrier frequency and all the baseband frequency components",
+      a: "the statement applies only to an SSB signal",
+      options: ["the statement applies only to DSB signal.", "the statement applies only to an SSB signal", "the statement applies to DSB and SSB", "the statement applies only to conventional AM", "the statement applies to Conv AM, DSB and SSB"]
+    },
+    {
+      q: "The output spectrum consists of the carrier frequency and the upper and lower sideband frequencies",
+      a: "the statement applies only to conventional AM",
+      options: ["the statement applies to Conv AM, DSB and SSB", "the statement applies only to conventional AM", "the statement applies only to Conv AM and DSB", "the statement applies only to DSB signal.", "the statement applies only to an SSB signal"]
+    },
+    {
+      q: "Altering the amplitude of the high-frequency carrier in accordance with the amplitude of the modulating signal",
+      a: "the statement applies to Conv AM, DSB and SSB",
+      options: ["the statement applies to Conv AM, DSB and SSB", "the statement applies only to an SSB signal", "the statement applies only to conventional AM", "the statement applies only to DSB signal", "the statement applies to DSB and SSB"]
+    },
+    {
+      q: "The output spectrum consists of the sum between the carrier frequency and all the baseband frequency components",
+      a: "the statement applies only to an SSB signal",
+      options: ["the statement applies to DSB and SSB", "the statement applies only to Conv AM and DSB", "the statement applies only to an SSB signal", "the statement applies only to DSB signal", "the statement applies only to conventional AM"]
+    },
+    {
+      q: "The baseband and transmission bandwidth are equal.",
+      a: "the statement applies only to an SSB signal",
+      options: ["the statement applies only to an SSB signal", "the statement applies to Conv AM, DSB and SSB", "the statement applies only to Conv AM and DSB", "the statement applies only to conventional AM", "the statement applies only to DSB signal."]
+    },
+    {
+      q: "RF transmission bandwidth requirement is the lowest.",
+      a: "the statement applies only to an SSB signal",
+      options: ["the statement applies only to conventional AM", "the statement applies to DSB and SSB", "the statement applies only to DSB signal", "the statement applies only to an SSB signal", "the statement applies only to Conv AM and DSB"]
+    }
+  ]
+
 
   };
+
+
 
   // Derived LAW_ALL pool
   data.LAW_ALL = [
@@ -284,6 +957,11 @@ window.QUIZ_DATA = (function () {
     ...(data.HW_CABLING_TOOLS || []),
     ...(data.IP_ADDRESSING_SUBNET || []),
     ...(data.EXERCISE_OSI_TCP_IP || []),
+    ...(data.RF_ANTENNAS_WAVES || []),
+    ...(data.POWER_AND_VOLTAGE_CONVERSIONS || []),
+    ...(data.AMPLIFIERS_FILTERS_AND_CIRCUITS || []),
+    ...(data.MODULATION_THEORY || []),
+    ...(data.SIGNAL_SPECTRA_IDENTIFICATION || []),
     ...data.LAW_ALL
   ];
 

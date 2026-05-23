@@ -8,9 +8,10 @@
 
 const Quiz = (function () {
   // --- Config & state ---
-  const TIME_LIMIT_MINUTES = 60;
+  const DEFAULT_TIME_LIMIT_MINUTES = 60;
+  let currentTimeLimitMinutes = DEFAULT_TIME_LIMIT_MINUTES;
   let timerInterval = null;
-  let timeRemaining = TIME_LIMIT_MINUTES * 60;
+  let timeRemaining = DEFAULT_TIME_LIMIT_MINUTES * 60;
   let currentMode = 'practice';
   let quizActive = false;
   let renderedQuizData = [];
@@ -29,6 +30,8 @@ const Quiz = (function () {
     categoryCheckboxes: document.getElementById('category-checkboxes'),
     examCategoryCheckboxes: document.getElementById('exam-category-checkboxes'),
     modeDescription: document.getElementById('mode-description'),
+    examDurationSelect: document.getElementById('exam-duration-select'),
+    examDurationWrapper: document.getElementById('exam-duration-wrapper'),
   };
 
   // Category definitions (display labels). Keep in sync with QUIZ_DATA keys.
@@ -36,7 +39,12 @@ const Quiz = (function () {
     { key: 'OSI_DATA_COMMS', label: 'OSI Model & Data Comms' },
     { key: 'HW_CABLING_TOOLS', label: 'Hardware, Cabling & Tools' },
     { key: 'IP_ADDRESSING_SUBNET', label: 'IP Addressing & Subnetting' },
-    { key: 'EXERCISE_OSI_TCP_IP', label: 'Exercises - OSI & TCP/IP' }
+    { key: 'EXERCISE_OSI_TCP_IP', label: 'Exercises - OSI & TCP/IP' },
+    { key: 'RF_ANTENNAS_WAVES', label: 'RF, Antennas & Waves' },
+    { key: 'POWER_AND_VOLTAGE_CONVERSIONS', label: 'Power & Voltage Conversions' },
+    { key: 'AMPLIFIERS_FILTERS_AND_CIRCUITS', label: 'Amplifiers, Filters & Circuits' },
+    { key: 'MODULATION_THEORY', label: 'Modulation Theory' },
+    { key: 'SIGNAL_SPECTRA_IDENTIFICATION', label: 'Signal Spectra Identification' }
   ];
 
   const ECE_LAW_KEYS = [
@@ -70,9 +78,27 @@ const Quiz = (function () {
     else dom.timerDisplay.classList.remove('timer-warning');
   }
 
+  function getSelectedTimeLimitMinutes() {
+    if (!dom.examDurationSelect) return DEFAULT_TIME_LIMIT_MINUTES;
+
+    const selected = Number(dom.examDurationSelect.value);
+    if (!Number.isFinite(selected) || selected <= 0) {
+      return DEFAULT_TIME_LIMIT_MINUTES;
+    }
+
+    return selected;
+  }
+
+  function syncExamTimerPreview() {
+    currentTimeLimitMinutes = getSelectedTimeLimitMinutes();
+    timeRemaining = currentTimeLimitMinutes * 60;
+    updateTimerDisplay();
+  }
+
   function startTimer() {
     if (timerInterval) clearInterval(timerInterval);
-    timeRemaining = TIME_LIMIT_MINUTES * 60;
+    currentTimeLimitMinutes = getSelectedTimeLimitMinutes();
+    timeRemaining = currentTimeLimitMinutes * 60;
     updateTimerDisplay();
     timerInterval = setInterval(() => {
       timeRemaining--;
@@ -94,6 +120,7 @@ const Quiz = (function () {
       eBtn.className = "flex-1 sm:flex-none py-3 px-4 md:px-8 rounded-lg text-sm font-semibold transition-all duration-200 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200";
       document.getElementById('category-selection').style.display = 'block';
       document.getElementById('exam-category-selection').style.display = 'none';
+      if (dom.examDurationWrapper) dom.examDurationWrapper.classList.add('hidden');
       dom.modeDescription.innerHTML = 'In <strong>Practice Mode</strong>, you get instant feedback.';
       dom.startBtn.textContent = 'Start Practice Session';
       dom.currentModeDisplay.textContent = 'Practice';
@@ -102,9 +129,11 @@ const Quiz = (function () {
       eBtn.className = "flex-1 sm:flex-none py-3 px-4 md:px-8 rounded-lg text-sm font-semibold transition-all duration-200 shadow-sm bg-white dark:bg-gray-600 text-primary dark:text-indigo-300";
       document.getElementById('category-selection').style.display = 'none';
       document.getElementById('exam-category-selection').style.display = 'block';
+      if (dom.examDurationWrapper) dom.examDurationWrapper.classList.remove('hidden');
       dom.modeDescription.innerHTML = 'In <strong>Exam Mode</strong>, answers are locked until submission.';
       dom.startBtn.textContent = 'Start Official Exam';
       dom.currentModeDisplay.textContent = 'Exam';
+      syncExamTimerPreview();
     }
   }
 
@@ -160,7 +189,13 @@ const Quiz = (function () {
       { key: 'ALL', label: 'All Topics (Everything)' },
       { key: 'OSI_DATA_COMMS', label: 'OSI Model & Data Comms' },
       { key: 'HW_CABLING_TOOLS', label: 'Hardware, Cabling & Tools' },
-      { key: 'IP_ADDRESSING_SUBNET', label: 'IP Addressing & Subnetting' }
+      { key: 'IP_ADDRESSING_SUBNET', label: 'IP Addressing & Subnetting' },
+      { key: 'EXERCISE_OSI_TCP_IP', label: 'Exercises - OSI & TCP/IP' },
+      { key: 'RF_ANTENNAS_WAVES', label: 'RF, Antennas & Waves' },
+      { key: 'POWER_AND_VOLTAGE_CONVERSIONS', label: 'Power & Voltage Conversions' },
+      { key: 'AMPLIFIERS_FILTERS_AND_CIRCUITS', label: 'Amplifiers, Filters & Circuits' },
+      { key: 'MODULATION_THEORY', label: 'Modulation Theory' },
+      { key: 'SIGNAL_SPECTRA_IDENTIFICATION', label: 'Signal Spectra Identification' }
     ];
 
     const examLawKeys = [
@@ -523,6 +558,10 @@ const Quiz = (function () {
       setMode('practice');
       renderCategoryCheckboxes();
       renderExamCategoryCheckboxes();
+
+      if (dom.examDurationSelect) {
+        dom.examDurationSelect.addEventListener('change', syncExamTimerPreview);
+      }
 
       // Hook small helpers onto global scope for buttons to call (keeps markup simple)
       window.toggleAllCategoryCheckboxes = toggleAllCategoryCheckboxes;
