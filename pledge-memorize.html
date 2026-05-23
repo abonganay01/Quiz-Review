@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en" class="transition-colors duration-200">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pledge of an Electronics Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        primary: '#4F46E5', // Indigo 600 matches Networking Quiz
+                        primaryHover: '#4338ca',
+                        surface: '#F9FAFB',
+                        success: '#10B981',
+                        error: '#EF4444',
+                        darkSurface: '#1F2937', // Gray 800
+                        darkBg: '#111827', // Gray 900
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(0, 0, 0, 0.08)',
+                        'glow': '0 0 15px rgba(79, 70, 229, 0.3)'
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        :root {
+            --correct-bg: #ECFDF5;
+            --correct-border: #10B981;
+            --correct-text: #065F46;
+            --incorrect-bg: #FEF2F2;
+            --incorrect-border: #EF4444;
+            --incorrect-text: #991B1B;
+        }
+
+        body { 
+            background-color: #F3F4F6; 
+            -webkit-tap-highlight-color: transparent;
+        }
+        .dark body { 
+            background-color: #111827; 
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #4b5563; }
+
+        /* Pledge Input Specifics */
+        .pledge-input {
+            display: inline-block;
+            padding: 2px 4px;
+            border-bottom: 2px solid #94a3b8; /* slate-400 */
+            background-color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+            color: #1e293b; /* slate-800 */
+            text-align: center;
+            transition: background-color 0.2s, border-color 0.2s, color 0.2s; /* Simplified transition */
+            outline: none;
+            border-radius: 4px 4px 0 0;
+            margin: 0 2px;
+            vertical-align: baseline;
+            font-size: 0.95em;
+            line-height: inherit;
+            min-width: 2.5rem; /* Touch target size */
+            height: 1.8em;
+            box-shadow: none;
+        }
+        
+        .dark .pledge-input {
+            background-color: rgba(30, 41, 59, 0.5);
+            border-bottom-color: #475569;
+            color: #e2e8f0;
+        }
+        
+        .pledge-input:focus {
+            border-bottom-color: #4F46E5;
+            background-color: #EEF2FF;
+            /* No animation or transform, just color change */
+        }
+        .dark .pledge-input:focus {
+            background-color: rgba(67, 56, 202, 0.2);
+            border-bottom-color: #818cf8;
+        }
+
+        .pledge-input.correct {
+            background-color: var(--correct-bg) !important;
+            border-bottom-color: var(--correct-border) !important;
+            color: var(--correct-text) !important;
+        }
+        .dark .pledge-input.correct {
+            background-color: rgba(6, 95, 70, 0.3) !important;
+            color: #6EE7B7 !important;
+            border-bottom-color: #059669 !important;
+        }
+
+        .pledge-input.incorrect {
+            background-color: var(--incorrect-bg) !important;
+            border-bottom-color: var(--incorrect-border) !important;
+            color: var(--incorrect-text) !important;
+        }
+        .dark .pledge-input.incorrect {
+            background-color: rgba(127, 29, 29, 0.3) !important;
+            color: #FCA5A5 !important;
+            border-bottom-color: #DC2626 !important;
+        }
+
+        /* Fade In Animation */
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+
+        /* Mobile Sticky Submit Bar */
+        @media (max-width: 768px) {
+            .mobile-sticky-bar {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 1rem;
+                background: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(10px);
+                border-top: 1px solid rgba(0,0,0,0.05);
+                z-index: 50;
+                box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.05);
+            }
+            .dark .mobile-sticky-bar {
+                background: rgba(17, 24, 39, 0.9);
+                border-top: 1px solid rgba(255,255,255,0.05);
+            }
+            .content-pad-bottom {
+                padding-bottom: 5rem;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-4 px-3 md:px-6 transition-colors duration-200">
+
+<!-- Dark Mode Toggle -->
+<button id="themeToggle" class="absolute top-4 right-4 md:top-6 md:right-8 flex items-center justify-center w-10 h-10 text-gray-600 dark:text-yellow-400 hover:text-primary dark:hover:text-yellow-300 transition-colors z-20 bg-white/90 dark:bg-gray-800/90 rounded-full backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-md">
+    <svg id="sunIcon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+    <svg id="moonIcon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+</button>
+
+<!-- Navigation Back -->
+<a href="index.html" class="absolute top-4 left-4 md:top-6 md:left-8 flex items-center text-gray-500 hover:text-primary dark:text-gray-400 dark:hover:text-white transition-colors z-20 font-medium text-sm">
+    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+    Back
+</a>
+
+<!-- Main Container -->
+<div class="w-full max-w-4xl mt-12 mb-8 animate-fade-in z-10">
+    
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-2xl overflow-hidden border border-gray-100 dark:border-gray-700 transition-colors duration-200">
+        
+        <!-- Decorative Top Bar -->
+        <div class="h-1.5 bg-gradient-to-r from-indigo-500 to-purple-600 w-full"></div>
+        
+        <!-- Header -->
+        <div class="p-6 md:p-10 text-center border-b border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
+            <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-2">
+                Pledge of an <span class="text-primary dark:text-indigo-400">Electronics Engineer</span>
+            </h1>
+            <p class="text-gray-500 dark:text-gray-400 max-w-lg mx-auto text-sm md:text-base">
+                Master your professional oath. Fill in the blanks.
+            </p>
+        </div>
+
+        <div class="p-4 sm:p-6 md:p-8 bg-white dark:bg-gray-800 content-pad-bottom">
+            
+            <!-- Controls Grid -->
+            <div class="bg-gray-50 dark:bg-gray-900/50 rounded-xl p-4 border border-gray-200 dark:border-gray-700 mb-6 shadow-inner">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 items-end">
+                    
+                    <!-- Difficulty -->
+                    <div class="col-span-1">
+                        <label class="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5" for="difficulty">Difficulty</label>
+                        <select id="difficulty" class="block w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-2 px-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm font-semibold">
+                            <option value="easy">Easy (10%)</option>
+                            <option value="medium" selected>Medium (25%)</option>
+                            <option value="hard">Hard (40%)</option>
+                            <option value="expert">Expert (70%)</option>
+                            <option value="sage">Sage (100%)</option>
+                        </select>
+                    </div>
+
+                    <!-- Mode -->
+                    <div class="col-span-1">
+                        <label class="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5" for="mode">Mode</label>
+                        <select id="mode" class="block w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-2 px-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm font-semibold">
+                            <option value="practice" selected>Practice</option>
+                            <option value="exam">Exam (Timed)</option>
+                        </select>
+                    </div>
+
+                    <!-- Timer/Seed (Stacked on Mobile) -->
+                    <div class="col-span-2 md:col-span-1 flex space-x-2">
+                        <div class="flex-1">
+                            <label class="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5" for="examDuration">Mins</label>
+                            <input id="examDuration" type="number" min="1" max="60" value="10" class="block w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-2 px-3 rounded-lg focus:ring-2 focus:ring-primary text-sm font-semibold" />
+                        </div>
+                        <div class="flex-1">
+                             <label class="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5" for="seed">Seed</label>
+                             <input id="seed" type="text" placeholder="Rand" class="block w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 py-2 px-3 rounded-lg focus:ring-2 focus:ring-primary text-sm font-semibold" />
+                        </div>
+                    </div>
+
+                    <!-- Generate Button -->
+                    <div class="col-span-2 md:col-span-1">
+                        <button id="generateBtn" class="w-full bg-primary hover:bg-primaryHover text-white font-bold py-2 px-4 rounded-lg shadow-md shadow-indigo-500/30 transition-all active:scale-95 text-sm h-[38px] flex items-center justify-center">
+                            Generate
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timer Bar (Hidden Default) -->
+            <div id="timerWrapper" class="hidden mb-6 animate-fade-in">
+                <div class="flex items-center justify-between bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800 p-3 rounded-lg">
+                    <div class="flex items-center text-indigo-900 dark:text-indigo-300 font-bold text-lg font-mono">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span id="timerDisplay">00:00</span>
+                    </div>
+                    <div class="flex-1 ml-4 h-2.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                        <div id="progressFill" class="h-full bg-primary transition-all duration-1000 ease-linear shadow-glow" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="flex justify-between items-center mb-4 px-1 border-b border-gray-100 dark:border-gray-700 pb-2">
+                <div class="flex items-center space-x-4">
+                    <div class="text-sm">
+                        <span class="text-gray-400 dark:text-gray-500 uppercase text-xs font-bold mr-1">Blanks:</span>
+                        <span id="blanksCount" class="font-bold text-gray-800 dark:text-white">0</span>
+                    </div>
+                    <div class="text-sm">
+                         <span class="text-gray-400 dark:text-gray-500 uppercase text-xs font-bold mr-1">Score:</span>
+                         <span id="scoreDisplay" class="font-bold text-primary dark:text-indigo-400">—</span>
+                    </div>
+                </div>
+                <button id="resetBtn" class="text-xs text-gray-400 hover:text-red-500 underline transition-colors">Reset</button>
+            </div>
+
+            <!-- Main Text Area -->
+            <div id="pledgeArea" class="prose prose-indigo max-w-none text-gray-800 dark:text-gray-200 text-base md:text-lg leading-loose md:leading-loose p-1 min-h-[200px] transition-colors duration-200">
+                <!-- Content Injected Here -->
+                <div class="flex flex-col items-center justify-center h-48 text-gray-400 dark:text-gray-600">
+                    <div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-full mb-3">
+                        <svg class="w-8 h-8 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    </div>
+                    <p class="font-medium text-sm">Tap 'Generate' to start memorizing.</p>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultsBox" class="mt-8 hidden animate-fade-in">
+                <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4 sm:p-6">
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-4 flex items-center">
+                        <span class="bg-indigo-100 dark:bg-indigo-900/50 text-primary dark:text-indigo-400 p-1 rounded mr-2">
+                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                        </span>
+                        Results Breakdown
+                    </h3>
+                    <div id="detailed" class="space-y-2 text-sm text-gray-600 dark:text-gray-300 max-h-64 overflow-y-auto pr-2"></div>
+                </div>
+            </div>
+
+            <!-- Mobile Sticky / Desktop Static Submit Button -->
+            <div class="mobile-sticky-bar md:static md:mt-8 md:p-0 md:bg-transparent md:border-none md:shadow-none hidden" id="submitContainer">
+                <button id="submitBtn" class="w-full md:w-auto md:float-right bg-success hover:bg-green-600 text-white text-lg font-bold py-3 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all active:scale-95 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Submit Answers
+                </button>
+                <div class="clear-both"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+/* === PLEDGE TEXT === */
+const PLEDGE_PARAGRAPHS = [
+  "I am an Electronics Engineer. In my profession, I take deep pride, but without vainglory; to it I owe solemn obligations that I am eager to fulfill.",
+  "As an Electronics Engineer, I will participate in none but honest and legal enterprises. To him who has engaged my services, as employer or client, I will give the utmost of performance and fidelity.",
+  "When needed, my skill and knowledge shall be given without reservation for the public good. From my special capacity springs the obligation to use it well in the service of humanity; and I accept the challenge that this implies.",
+  "Zealous of the high repute of my colleague, I will strive to protect the interest and the good name of any engineer that I know be deserving; but I will not shirk, should duty dictate, from disclosing the truth regarding anyone who, by unscrupulous act, has shown himself unworthy of the profession.",
+  "As others before me have vitalized and turned to practical account the principles of science and the revelations of technology and have rendered usable to mankind nature's vast resources of matter and energy so do I dedicate myself to the analysis, synthesis and dissemination of engineering knowledge and practice. And especially to the instruction of younger members of my profession in all its arts and traditions.",
+  "To my colleagues I pledge, in the same full measure, I ask of them, integrity and fair dealing, tolerance and respect, and devotion to the standards and the dignity of our profession, with the consciousness, always, that our special expertise carries with it the obligation to serve humanity with complete dedication.",
+  "So help me God."
+];
+
+/* Utilities */
+function seedRandom(seedString) {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < seedString.length; i++) h = Math.imul(h ^ seedString.charCodeAt(i), 16777619) >>> 0;
+  return function() {
+    h += 0x6D2B79F5;
+    let t = Math.imul(h ^ (h >>> 15), 1 | h);
+    t ^= t + Math.imul(t ^ (t >>> 7), 61 | t);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function randomFrom(seedFn) { return seedFn ? seedFn() : Math.random(); }
+
+function tokenize(text) {
+  const re = /([A-Za-z0-9À-ÖØ-öø-ÿ’'`-]+|[\s]+|[.,;:()—–"“”])/g;
+  const tokens = [];
+  let m;
+  while ((m = re.exec(text)) !== null) tokens.push(m[0]);
+  return tokens;
+}
+
+function calculateGlobalBlanks(allParagraphs, difficulty, seedFn) {
+  let globalTokens = [], tokenOffset = 0;
+  const paragraphMeta = allParagraphs.map(text => {
+    const tokens = tokenize(text);
+    const meta = { tokens: tokens, startIdx: tokenOffset };
+    const wordIndices = tokens.map((t,i)=>({t,i,absI:i+tokenOffset})).filter(x=>/\w/.test(x.t));
+    tokenOffset += tokens.length;
+    globalTokens = globalTokens.concat(wordIndices);
+    return meta;
+  });
+  if (difficulty === 'sage') { const set = new Set(); globalTokens.forEach(x=>set.add(x.absI)); return { set, meta: paragraphMeta }; }
+  const fractions = { easy:0.10, medium:0.25, hard:0.40, expert:0.70 };
+  const frac = fractions[difficulty] || 0.25;
+  const count = Math.max(Math.floor(globalTokens.length * 0.05), Math.round(globalTokens.length * frac));
+  const pool = globalTokens.map(x=>x.absI);
+  const chosen = new Set();
+  while (chosen.size < count && pool.length) {
+    const r = Math.floor(randomFrom(seedFn) * pool.length);
+    chosen.add(pool.splice(r,1)[0]);
+  }
+  return { set: chosen, meta: paragraphMeta };
+}
+
+function normalizeForCompare(s) {
+  return s.trim().toLowerCase().replace(/^[^0-9a-zA-ZÀ-ÖØ-öø-ÿ]+|[^0-9a-zA-ZÀ-ÖØ-öø-ÿ]+$/g,'');
+}
+
+/* Advance Focus Logic */
+function attachAdvanceOnSpace(inp) {
+  let composing = false;
+
+  inp.addEventListener('compositionstart', ()=> composing = true);
+  inp.addEventListener('compositionend', ()=> { composing = false; });
+
+  function focusNext() {
+    const inputs = Array.from(document.querySelectorAll('.pledge-input'));
+    if (inputs.length === 0) return;
+    const idx = inputs.indexOf(inp);
+    const next = (idx >= 0 && idx < inputs.length - 1) ? inputs[idx + 1] : inputs[0];
+    next.focus();
+    // Mobile: Ensure element is visible above keyboard
+    next.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // Handle Spacebar/Enter on mobile keyboards (often sends input event with trailing space)
+  inp.addEventListener('input', (ev) => {
+    if (composing) return;
+    const val = inp.value;
+    
+    // Check Answer in Practice Mode
+    if (document.getElementById('mode').value === 'practice') {
+        const correct = inp.getAttribute('data-correct') || '';
+        if (val.trim().length === 0) { inp.classList.remove('correct','incorrect'); }
+        else if (normalizeForCompare(val) === normalizeForCompare(correct)) { 
+            inp.classList.add('correct'); inp.classList.remove('incorrect'); 
+        } else { 
+            inp.classList.add('incorrect'); inp.classList.remove('correct'); 
+        }
+    }
+
+    // Auto-advance logic
+    if ((ev.data === ' ' || /\s$/.test(val))) {
+      inp.value = val.replace(/\s+$/g, ''); // Remove trailing space
+      focusNext();
+    }
+  });
+
+  // Handle physical Enter/Space
+  inp.addEventListener('keydown', (e) => {
+    if (composing) return;
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      focusNext();
+    }
+  });
+}
+
+function renderPledge(paragraphs, difficulty, seedFn, mode) {
+  const area = document.getElementById('pledgeArea');
+  area.innerHTML = '';
+  const { set: blanksSet, meta } = calculateGlobalBlanks(paragraphs, difficulty, seedFn);
+  let totalBlanks = 0;
+
+  meta.forEach((pData) => {
+    const p = document.createElement('p');
+    p.className = "mb-6 text-left leading-relaxed";
+    
+    pData.tokens.forEach((tok, localIdx) => {
+      const absoluteIndex = pData.startIdx + localIdx;
+      
+      if (blanksSet.has(absoluteIndex)) {
+        totalBlanks++;
+        const span = document.createElement('span');
+        const inp = document.createElement('input');
+        inp.type = 'text';
+        inp.setAttribute('data-idx', absoluteIndex);
+        inp.setAttribute('data-correct', tok);
+        inp.className = 'pledge-input';
+        
+        // Mobile optimizations
+        inp.autocomplete = 'off';
+        inp.autocapitalize = 'off'; 
+        inp.spellcheck = false;
+        
+        // Dynamic Width
+        const minW = Math.min(20, Math.max(4, tok.trim().length + 2));
+        inp.style.width = (minW) + 'ch';
+
+        attachAdvanceOnSpace(inp);
+        span.appendChild(inp);
+        p.appendChild(span);
+      } else {
+        if (tok.trim() === '') p.appendChild(document.createTextNode(tok));
+        else { 
+            const span = document.createElement('span'); 
+            span.textContent = tok; 
+            p.appendChild(span); 
+        }
+      }
+    });
+    area.appendChild(p);
+  });
+
+  document.getElementById('blanksCount').textContent = totalBlanks;
+  document.getElementById('submitContainer').classList.remove('hidden');
+  document.getElementById('submitContainer').classList.add('block');
+}
+
+/* Grading */
+function gradePledge() {
+  const inputs = Array.from(document.querySelectorAll('.pledge-input'));
+  let correct = 0; const details = [];
+  inputs.forEach(inp => {
+    const got = inp.value || '';
+    const corr = inp.getAttribute('data-correct') || '';
+    const isCorrect = normalizeForCompare(got) === normalizeForCompare(corr);
+    if (isCorrect) { correct++; inp.classList.add('correct'); inp.classList.remove('incorrect'); }
+    else { inp.classList.add('incorrect'); inp.classList.remove('correct'); }
+    details.push({ idx: inp.dataset.idx, entered: got, correct: corr, ok: isCorrect });
+  });
+  return { correct, total: inputs.length, details };
+}
+
+/* Timer */
+let examTimer = null;
+let timeLeftSec = 0;
+let totalTimeSec = 0;
+let beep30Played = false;
+const audioCtxAvailable = typeof window.AudioContext !== 'undefined' || typeof window.webkitAudioContext !== 'undefined';
+let audioCtx = null;
+function ensureAudioCtx(){ if (!audioCtx && audioCtxAvailable) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+function playBeep(type='short'){ 
+    if (!audioCtxAvailable) return; 
+    try{ 
+        ensureAudioCtx(); 
+        const now = audioCtx.currentTime; 
+        const o = audioCtx.createOscillator(); 
+        const g = audioCtx.createGain(); 
+        o.connect(g); g.connect(audioCtx.destination); 
+        if (type==='short'){ 
+            o.frequency.value=880; g.gain.setValueAtTime(0.0001, now); g.gain.exponentialRampToValueAtTime(0.2, now+0.01); o.start(now); g.gain.exponentialRampToValueAtTime(0.0001, now+0.18); o.stop(now+0.19); 
+        } else { 
+            o.frequency.setValueAtTime(880, now); g.gain.setValueAtTime(0.0001, now); g.gain.exponentialRampToValueAtTime(0.25, now+0.01); o.start(now); o.frequency.exponentialRampToValueAtTime(220, now+0.6); g.gain.exponentialRampToValueAtTime(0.0001, now+0.65); o.stop(now+0.66); 
+        } 
+    }catch(e){ console.warn('Beep failed', e); } 
+}
+
+function startExamTimer(minutes){
+  clearExamTimer(); 
+  totalTimeSec = Math.max(1, Math.floor(Number(minutes) || 10) * 60); 
+  timeLeftSec = totalTimeSec; beep30Played = false; 
+  updateTimerDisplayUI(); 
+  document.getElementById('timerWrapper').classList.remove('hidden'); 
+  updateProgressBar();
+  
+  examTimer = setInterval(()=>{ 
+    timeLeftSec--; updateTimerDisplayUI(); updateProgressBar(); 
+    if (timeLeftSec===30 && !beep30Played){ 
+        try{ ensureAudioCtx(); if (audioCtx && audioCtx.state==='suspended') audioCtx.resume(); }catch(e){} 
+        playBeep('short'); beep30Played = true; 
+    } 
+    if (timeLeftSec<=0){ 
+        clearExamTimer(); document.getElementById('timerDisplay').textContent='00:00'; updateProgressBar(); 
+        try{ ensureAudioCtx(); if (audioCtx && audioCtx.state==='suspended') audioCtx.resume(); }catch(e){} 
+        playBeep('finish'); handleAutoSubmit(); 
+    } 
+  }, 1000);
+}
+
+function updateTimerDisplayUI(){ 
+    const mm = Math.floor(timeLeftSec/60); 
+    const ss = timeLeftSec%60; 
+    document.getElementById('timerDisplay').textContent = `${String(mm).padStart(2,'0')}:${String(ss).padStart(2,'0')}`; 
+}
+
+function updateProgressBar(){ 
+    const fill = document.getElementById('progressFill'); 
+    if (!fill) return; 
+    const pct = totalTimeSec ? Math.max(0, Math.min(100, Math.round((timeLeftSec/totalTimeSec)*100))) : 0; 
+    fill.style.width = pct + '%'; 
+    if (pct<=10){ fill.classList.remove('bg-primary'); fill.classList.add('bg-red-500'); } 
+    else if (pct<=30){ fill.classList.remove('bg-primary'); fill.classList.add('bg-yellow-500'); } 
+    else { fill.className = 'h-full bg-primary transition-all duration-1000 ease-linear shadow-glow'; } 
+}
+
+function clearExamTimer(){ 
+    if (examTimer){ clearInterval(examTimer); examTimer = null; } 
+    document.getElementById('timerWrapper').classList.add('hidden'); 
+    const fill = document.getElementById('progressFill'); 
+    if (fill){ fill.style.width = '100%'; fill.className = 'h-full bg-primary'; } 
+}
+function handleAutoSubmit(){ performSubmit(true); }
+
+function performSubmit(isAuto=false){
+  const grading = gradePledge();
+  const pct = grading.total ? Math.round(grading.correct / grading.total * 100) : 0;
+  document.getElementById('scoreDisplay').textContent = `${grading.correct}/${grading.total} (${pct}%)`;
+  
+  const dBox = document.getElementById('detailed'); dBox.innerHTML = '';
+  grading.details.slice(0,15).forEach(it=>{
+    const div = document.createElement('div'); 
+    div.className = `p-3 rounded-lg border-l-4 ${it.ok ? 'border-green-500 bg-green-50 dark:bg-green-900/20' : 'border-red-500 bg-red-50 dark:bg-red-900/20'} flex items-center`;
+    const entered = it.entered ? escapeHtml(it.entered) : '<em class="text-gray-400">empty</em>';
+    const content = it.ok 
+      ? `<div class="flex-1"><span class="text-green-700 dark:text-green-400 font-bold">✔ ${escapeHtml(it.correct)}</span></div>`
+      : `<div class="flex-1"><div class="text-red-700 dark:text-red-400 font-bold">✖ ${escapeHtml(it.correct)}</div><div class="text-gray-500 dark:text-gray-400 text-xs mt-0.5">You typed: ${entered}</div></div>`;
+    div.innerHTML = content;
+    dBox.appendChild(div);
+  });
+  
+  if (grading.details.length > 15) { 
+      const more = document.createElement('div'); 
+      more.className = 'text-center text-xs text-gray-500 italic mt-3'; 
+      more.innerHTML = `...and ${grading.details.length - 15} more blanks.`; 
+      dBox.appendChild(more); 
+  }
+  
+  document.getElementById('resultsBox').classList.remove('hidden');
+  resultsBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  if (document.getElementById('mode').value === 'exam' || isAuto) { 
+      document.querySelectorAll('.pledge-input').forEach(i=>i.disabled=true); 
+      clearExamTimer(); 
+  }
+}
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; });}
+
+/* Event Listeners */
+document.getElementById('generateBtn').addEventListener('click', ()=> {
+  document.getElementById('resultsBox').classList.add('hidden'); 
+  document.getElementById('scoreDisplay').textContent = '—'; 
+  clearExamTimer();
+  
+  const diff = document.getElementById('difficulty').value; 
+  const mode = document.getElementById('mode').value;
+  const seedText = document.getElementById('seed').value.trim(); 
+  const seedFn = seedText ? seedRandom(seedText) : null;
+  
+  renderPledge(PLEDGE_PARAGRAPHS, diff, seedFn, mode);
+  
+  if (mode === 'exam') { 
+      const minutes = Number(document.getElementById('examDuration').value) || 10; 
+      startExamTimer(minutes); 
+      try{ ensureAudioCtx(); if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); }catch(e){} 
+  }
+});
+
+document.getElementById('resetBtn').addEventListener('click', ()=> {
+  clearExamTimer(); 
+  const area = document.getElementById('pledgeArea'); 
+  area.innerHTML = `<div class="flex flex-col items-center justify-center h-48 text-gray-400 dark:text-gray-600"><div class="bg-gray-50 dark:bg-gray-800/50 p-4 rounded-full mb-3"><svg class="w-8 h-8 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg></div><p class="font-medium text-sm">Tap 'Generate' to start memorizing.</p></div>`;
+  document.getElementById('resultsBox').classList.add('hidden'); 
+  document.getElementById('scoreDisplay').textContent = '—'; 
+  document.getElementById('blanksCount').textContent = '0'; 
+  document.getElementById('seed').value = '';
+  document.getElementById('submitContainer').classList.add('hidden');
+});
+
+document.getElementById('submitBtn').addEventListener('click', ()=> { 
+    performSubmit(false); clearExamTimer(); 
+});
+
+/* Dark Mode Logic */
+const themeToggleBtn = document.getElementById('themeToggle');
+const htmlRoot = document.documentElement;
+
+if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    htmlRoot.classList.add('dark');
+} else {
+    htmlRoot.classList.remove('dark');
+}
+
+themeToggleBtn.addEventListener('click', function(){ 
+    if (htmlRoot.classList.contains('dark')) { 
+        htmlRoot.classList.remove('dark'); 
+        localStorage.setItem('color-theme','light'); 
+    } else { 
+        htmlRoot.classList.add('dark'); 
+        localStorage.setItem('color-theme','dark'); 
+    } 
+});
+</script>
+</body>
+</html>

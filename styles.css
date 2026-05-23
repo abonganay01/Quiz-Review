@@ -1,0 +1,178 @@
+/* --- Root & Reset --- */
+:root {
+  --correct-bg: #ECFDF5;
+  --correct-border: #10B981;
+  --incorrect-bg: #FEF2F2;
+  --incorrect-border: #EF4444;
+  --primary-focus: #4F46E5;
+  --text-main: #1F2937;
+  --bg-main: #F3F4F6;
+  --card-bg: #FFFFFF;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  -webkit-tap-highlight-color: transparent;
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  line-height: 1.6; /* Increased slightly for better reading */
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased; /* Crisper text */
+}
+
+/* --- Dark Mode Variables --- */
+.dark {
+  --text-main: #E5E7EB;
+  --bg-main: #111827;
+  --card-bg: #1F2937;
+}
+
+/* --- Typography --- */
+h1, h2, h3, h4 {
+  color: inherit;
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+/* --- Layout Components --- */
+.question-card {
+  background-color: var(--card-bg);
+  border: 1px solid #E5E7EB;
+  border-radius: 0.5rem; /* Reduced radius for a simpler look */
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Minimal shadow */
+}
+
+.dark .question-card {
+  border-color: #374151;
+  box-shadow: none; /* Flat look in dark mode is easier on eyes */
+}
+
+/* --- Interactive Options --- */
+.option-label {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  border: 2px solid #E5E7EB;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  min-height: 3.5rem;
+  /* NO TRANSITIONS: Instant feedback is better for study/focus */
+}
+
+/* Hover States - Instant Change */
+.option-label:hover:not(.disabled) {
+  background-color: #F9FAFB;
+  border-color: var(--primary-focus);
+}
+
+.dark .option-label:hover:not(.disabled) {
+  background-color: #374151;
+  border-color: #6366F1;
+}
+
+.dark .option-label {
+  border-color: #374151;
+}
+
+.option-label.disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+/* --- Accessibility Focus States (Crucial for keyboard study) --- */
+.option-label:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--primary-focus);
+  outline-offset: 2px;
+}
+
+/* --- Answer States --- */
+.correct-option {
+  background-color: var(--correct-bg) !important;
+  border-color: var(--correct-border) !important;
+  color: #065F46;
+}
+
+.dark .correct-option {
+  background-color: rgba(6, 95, 70, 0.2) !important;
+  border-color: #059669 !important;
+  color: #D1FAE5;
+}
+
+.incorrect-option {
+  background-color: var(--incorrect-bg) !important;
+  border-color: var(--incorrect-border) !important;
+  color: #991B1B;
+}
+
+.dark .incorrect-option {
+  background-color: rgba(127, 29, 29, 0.2) !important;
+  border-color: #DC2626 !important;
+  color: #FECACA;
+}
+
+/* --- Form Elements --- */
+.cat-checkbox {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--primary-focus);
+  margin-right: 0.75rem;
+}
+
+/* --- Feedback & Timer --- */
+.feedback {
+  padding: 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  border: 1px solid transparent; /* Prevents layout shift when border appears */
+}
+
+.timer-warning {
+  color: #DC2626 !important;
+  font-weight: 700;
+}
+
+.dark .timer-warning {
+  color: #EF4444 !important;
+}
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { 
+  background: #CBD5E1; 
+  border-radius: 4px; 
+}
+.dark ::-webkit-scrollbar-thumb { background: #4B5563; }
+
+/* --- Responsive --- */
+@media (max-width: 640px) {
+  .question-card {
+    padding: 1rem;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  
+  .option-label {
+    padding: 0.75rem;
+    font-size: 1rem; /* Prevent zooming on mobile inputs */
+  }
+}
+
+@media (min-width: 768px) {
+  .start-btn {
+    min-width: 200px;
+    padding: 0.75rem 2.5rem;
+  }
+}
