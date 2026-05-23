@@ -261,6 +261,21 @@ const Quiz = (function () {
     return ['ALL'];
   }
 
+  function prepareQuizData(data) {
+    const randomizedQuestions = (data || []).map(item => ({
+      ...item,
+      options: [...item.options]
+    }));
+
+    shuffleArray(randomizedQuestions);
+
+    randomizedQuestions.forEach(question => {
+      shuffleArray(question.options);
+    });
+
+    return randomizedQuestions;
+  }
+
   // --- Quiz lifecycle ---
   function startQuiz() {
     let baseData = [];
@@ -289,8 +304,7 @@ const Quiz = (function () {
 
     if (!baseData || baseData.length === 0) baseData = window.QUIZ_DATA.ALL.slice();
 
-    renderedQuizData = [...baseData];
-    shuffleArray(renderedQuizData);
+    renderedQuizData = prepareQuizData(baseData);
 
     // UI transitions
     dom.quizIntro.style.display = 'none';
@@ -432,13 +446,10 @@ const Quiz = (function () {
       qHeader.appendChild(qText);
       qContainer.appendChild(qHeader);
 
-      const optionsToRender = [...item.options];
-      shuffleArray(optionsToRender);
-
       const optionsContainer = document.createElement('div');
       optionsContainer.className = 'space-y-3 pl-0 sm:pl-2';
 
-      optionsToRender.forEach((option, oIndex) => {
+      item.options.forEach((option, oIndex) => {
         const label = document.createElement('label');
         label.className = 'option-label flex items-center p-4 rounded-lg border-2 border-transparent bg-gray-50 dark:bg-gray-700/50 hover:bg-indigo-50 dark:hover:bg-gray-600 hover:border-indigo-100 dark:hover:border-gray-500 cursor-pointer transition-all group active:scale-[0.99]';
         label.setAttribute('for', `q${index}-o${oIndex}`);
