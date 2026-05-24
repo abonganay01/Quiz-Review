@@ -34,30 +34,118 @@ const Quiz = (function () {
     examDurationWrapper: document.getElementById('exam-duration-wrapper'),
   };
 
-  // Category definitions (display labels). Keep in sync with QUIZ_DATA keys.
-  const DATA_COMMS_KEYS = [
-    { key: 'OSI_DATA_COMMS', label: 'OSI Model & Data Comms' },
-    { key: 'HW_CABLING_TOOLS', label: 'Hardware, Cabling & Tools' },
-    { key: 'IP_ADDRESSING_SUBNET', label: 'IP Addressing & Subnetting' },
-    { key: 'EXERCISE_OSI_TCP_IP', label: 'Exercises - OSI & TCP/IP' },
-    { key: 'RF_ANTENNAS_WAVES', label: 'RF, Antennas & Waves' },
-    { key: 'POWER_AND_VOLTAGE_CONVERSIONS', label: 'Power & Voltage Conversions' },
-    { key: 'AMPLIFIERS_FILTERS_AND_CIRCUITS', label: 'Amplifiers, Filters & Circuits' },
-    { key: 'MODULATION_THEORY', label: 'Modulation Theory' },
-    { key: 'SIGNAL_SPECTRA_IDENTIFICATION', label: 'Signal Spectra Identification' }
-  ];
-
-  const ECE_LAW_KEYS = [
-    { key: 'LAW_RA10844', label: 'RA 10844 – DICT Act' },
-    { key: 'LAW_RA11363', label: 'RA 11363 – Phil Space Act' },
-    { key: 'LAW_RA11934', label: 'RA 11934 – SIM Registration' },
-    { key: 'LAW_RA3846', label: 'RA 3846 – Radio Control Law' },
-    { key: 'LAW_RA7925', label: 'RA 7925 – Public Telecom Policy' },
-    { key: 'LAW_RA12234', label: 'RA 12234 – Konektadong Pinoy Act' },
-    { key: 'LAW_RA9292', label: 'RA 9292 – Electronics Engineering Law' }
-  ];
+  const CATEGORY_LABELS = {
+    OSI_DATA_COMMS: 'OSI Model & Data Comms',
+    HW_CABLING_TOOLS: 'Hardware, Cabling & Tools',
+    IP_ADDRESSING_SUBNET: 'IP Addressing & Subnetting',
+    EXERCISE_OSI_TCP_IP: 'Exercises - OSI & TCP/IP',
+    RF_ANTENNAS_WAVES: 'RF, Antennas & Waves',
+    POWER_AND_VOLTAGE_CONVERSIONS: 'Power & Voltage Conversions',
+    AMPLIFIERS_FILTERS_AND_CIRCUITS: 'Amplifiers, Filters & Circuits',
+    MODULATION_THEORY: 'Modulation Theory',
+    SIGNAL_SPECTRA_IDENTIFICATION: 'Signal Spectra Identification',
+    LAW_RA10844: 'RA 10844 – DICT Act',
+    LAW_RA11363: 'RA 11363 – Phil Space Act',
+    LAW_RA11934: 'RA 11934 – SIM Registration',
+    LAW_RA3846: 'RA 3846 – Radio Control Law',
+    LAW_RA7925: 'RA 7925 – Public Telecom Policy',
+    LAW_RA12234: 'RA 12234 – Konektadong Pinoy Act',
+    LAW_RA9292: 'RA 9292 – Electronics Engineering Law'
+  };
 
   // --- Utilities ---
+  function getQuizDataStore() {
+    return window.QUIZ_DATA && typeof window.QUIZ_DATA === 'object' ? window.QUIZ_DATA : {};
+  }
+
+  function getAvailableCategoryKeys() {
+    const quizData = getQuizDataStore();
+    return Object.keys(quizData).filter(key => key !== 'ALL' && key !== 'LAW_ALL' && Array.isArray(quizData[key]));
+  }
+
+  function getCategoryGroups() {
+    const keys = getAvailableCategoryKeys();
+    return {
+      technical: keys.filter(key => !key.startsWith('LAW_')),
+      law: keys.filter(key => key.startsWith('LAW_'))
+    };
+  }
+
+  function formatCategoryLabel(key) {
+    if (CATEGORY_LABELS[key]) return CATEGORY_LABELS[key];
+
+    if (key.startsWith('LAW_')) {
+      const humanized = key
+        .slice(4)
+        .replace(/_/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      return humanized ? `RA ${humanized}` : 'Law Category';
+    }
+
+    return key
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, char => char.toUpperCase());
+  }
+
+  function getQuestionsForSelection(keys) {
+    const quizData = getQuizDataStore();
+
+    if (!Array.isArray(keys) || keys.length === 0) {
+      return Array.isArray(quizData.ALL) ? quizData.ALL.slice() : [];
+    }
+
+    if (keys.includes('ALL')) {
+      return Array.isArray(quizData.ALL) ? quizData.ALL.slice() : [];
+    }
+
+    const selected = new Set(keys);
+    const combined = [];
+
+    selected.forEach(key => {
+      if (key === 'EXAM_LAWS') {
+        if (Array.isArray(quizData.LAW_ALL)) combined.push(...quizData.LAW_ALL);
+        return;
+      }
+
+      if (Array.isArray(quizData[key])) {
+        combined.push(...quizData[key]);
+      }
+    });
+
+    return combined;
+  }
+
+  function getCategoryLabelForSelection(keys) {
+    if (!Array.isArray(keys) || keys.length === 0) return 'All Topics';
+    if (keys.includes('ALL')) return 'All Topics';
+
+    const labels = keys
+      .filter(key => key !== 'EXAM_LAWS')
+      .map(formatCategoryLabel)
+      .filter(Boolean);
+
+    if (keys.includes('EXAM_LAWS')) labels.push('Telecom & ICT Laws (All RAs)');
+
+    return labels.length > 0 ? labels.join(', ') : 'All Topics';
+  }
+
+  function sanitizeQuestion(item) {
+    if (!item || typeof item !== 'object') return null;
+
+    const question = typeof item.q === 'string' ? item.q.trim() : '';
+    const answer = typeof item.a === 'string' ? item.a.trim() : '';
+    const options = Array.isArray(item.options)
+      ? item.options
+          .filter(option => typeof option === 'string' && option.trim())
+          .map(option => option.trim())
+      : [];
+
+    if (!question || !answer || options.length === 0) return null;
+
+    return { q: question, a: answer, options };
+  }
+
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -143,7 +231,7 @@ const Quiz = (function () {
     container.innerHTML = '';
 
     const createSection = (title, items) => {
-        if (title) {
+      if (title) {
         const header = document.createElement('h3');
         header.className = 'text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2 uppercase tracking-wider pl-1';
         header.textContent = title;
@@ -177,30 +265,20 @@ const Quiz = (function () {
       container.appendChild(grid);
     };
 
-    createSection('Data Communications', DATA_COMMS_KEYS);
-    createSection('ECE Laws & Regulations', ECE_LAW_KEYS);
+    const { technical, law } = getCategoryGroups();
+
+    if (technical.length > 0) {
+      createSection('Technical Topics', technical.map(key => ({ key, label: formatCategoryLabel(key) })));
+    }
+
+    if (law.length > 0) {
+      createSection('Legal & Regulatory', law.map(key => ({ key, label: formatCategoryLabel(key) })));
+    }
   }
 
   function renderExamCategoryCheckboxes() {
     const container = dom.examCategoryCheckboxes;
     container.innerHTML = '';
-
-    const examDataKeys = [
-      { key: 'ALL', label: 'All Topics (Everything)' },
-      { key: 'OSI_DATA_COMMS', label: 'OSI Model & Data Comms' },
-      { key: 'HW_CABLING_TOOLS', label: 'Hardware, Cabling & Tools' },
-      { key: 'IP_ADDRESSING_SUBNET', label: 'IP Addressing & Subnetting' },
-      { key: 'EXERCISE_OSI_TCP_IP', label: 'Exercises - OSI & TCP/IP' },
-      { key: 'RF_ANTENNAS_WAVES', label: 'RF, Antennas & Waves' },
-      { key: 'POWER_AND_VOLTAGE_CONVERSIONS', label: 'Power & Voltage Conversions' },
-      { key: 'AMPLIFIERS_FILTERS_AND_CIRCUITS', label: 'Amplifiers, Filters & Circuits' },
-      { key: 'MODULATION_THEORY', label: 'Modulation Theory' },
-      { key: 'SIGNAL_SPECTRA_IDENTIFICATION', label: 'Signal Spectra Identification' }
-    ];
-
-    const examLawKeys = [
-      { key: 'EXAM_LAWS', label: 'Telecom & ICT Laws (All RAs)' }
-    ];
 
     const createExamSection = (title, items) => {
       if (title) {
@@ -237,8 +315,16 @@ const Quiz = (function () {
       container.appendChild(grid);
     };
 
-    createExamSection('', examDataKeys);
-    createExamSection('Legal & Regulatory', examLawKeys);
+    const { technical, law } = getCategoryGroups();
+    const examItems = [{ key: 'ALL', label: 'All Topics (Everything)' }];
+
+    if (law.length > 0) {
+      examItems.push({ key: 'EXAM_LAWS', label: 'Telecom & ICT Laws (All RAs)' });
+    }
+
+    examItems.push(...technical.map(key => ({ key, label: formatCategoryLabel(key) })));
+
+    createExamSection('', examItems);
   }
 
   function toggleAllCategoryCheckboxes(state) {
@@ -252,7 +338,7 @@ const Quiz = (function () {
   function getSelectedCategoriesForPractice() {
     const checked = Array.from(document.querySelectorAll('#category-checkboxes input[type="checkbox"]:checked')).map(n => n.value);
     if (checked.length > 0) return checked;
-    return ['ALL'];
+    return getAvailableCategoryKeys();
   }
 
   function getSelectedCategoriesForExam() {
@@ -262,49 +348,37 @@ const Quiz = (function () {
   }
 
   function prepareQuizData(data) {
-    const randomizedQuestions = (data || []).map(item => ({
-      ...item,
-      options: [...item.options]
-    }));
+    const sanitized = (data || [])
+      .map(sanitizeQuestion)
+      .filter(Boolean)
+      .map(item => ({
+        ...item,
+        options: [...item.options]
+      }));
 
-    shuffleArray(randomizedQuestions);
+    shuffleArray(sanitized);
 
-    randomizedQuestions.forEach(question => {
+    sanitized.forEach(question => {
       shuffleArray(question.options);
     });
 
-    return randomizedQuestions;
+    return sanitized;
   }
 
   // --- Quiz lifecycle ---
   function startQuiz() {
-    let baseData = [];
-    let chosenCategories = [];
+    const selectedCategories = currentMode === 'practice'
+      ? getSelectedCategoriesForPractice()
+      : getSelectedCategoriesForExam();
 
-    if (currentMode === 'practice') {
-      chosenCategories = getSelectedCategoriesForPractice();
-      currentCategoryLabel = "Practice Session";
+    currentCategoryLabel = getCategoryLabelForSelection(selectedCategories);
+    const baseData = getQuestionsForSelection(selectedCategories);
 
-      chosenCategories.forEach(catKey => {
-        if (catKey === 'ALL') baseData = window.QUIZ_DATA.ALL.slice();
-        else if (window.QUIZ_DATA[catKey]) baseData = baseData.concat(window.QUIZ_DATA[catKey]);
-      });
+    if (!Array.isArray(baseData) || baseData.length === 0) {
+      renderedQuizData = [];
     } else {
-      chosenCategories = getSelectedCategoriesForExam();
-      currentCategoryLabel = "Exam Session";
-
-      if (chosenCategories.includes('EXAM_LAWS')) baseData = baseData.concat(window.QUIZ_DATA.LAW_ALL || []);
-      if (chosenCategories.includes('ALL')) baseData = window.QUIZ_DATA.ALL.slice();
-      else {
-        chosenCategories.forEach(catKey => {
-          if (window.QUIZ_DATA[catKey]) baseData = baseData.concat(window.QUIZ_DATA[catKey]);
-        });
-      }
+      renderedQuizData = prepareQuizData(baseData);
     }
-
-    if (!baseData || baseData.length === 0) baseData = window.QUIZ_DATA.ALL.slice();
-
-    renderedQuizData = prepareQuizData(baseData);
 
     // UI transitions
     dom.quizIntro.style.display = 'none';
